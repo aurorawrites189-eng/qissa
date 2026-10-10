@@ -37,5 +37,5 @@ export async function GET(request: NextRequest) {
     if (!error) return response;
   }
 
-  return NextResponse.redirect(new URL(`/${SITE.defaultLocale}/auth/login`, url.origin));
+  return NextResponse.redirect(new URL(`/${SITE.defaultLocale}/login`, url.origin));
 }

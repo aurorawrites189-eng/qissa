@@ -19,7 +19,7 @@ export default async function EditDraftPage({
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  if (!user) redirect(`/${lang}/auth/login`);
+  if (!user) redirect(`/${lang}/login`);
   const { data: profile } = await supabase
     .from("profiles")
     .select("age_class")

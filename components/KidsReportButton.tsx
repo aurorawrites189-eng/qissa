@@ -51,7 +51,7 @@ export function KidsReportButton({
   if (userId === null) {
     return (
       <Link
-        href={`/${lang}/auth/login`}
+        href={`/${lang}/login`}
         className="text-sm text-neutral-500 underline hover:text-neutral-700 dark:text-neutral-400"
       >
         {labels.reportLogin}

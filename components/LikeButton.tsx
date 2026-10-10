@@ -46,7 +46,7 @@ export function LikeButton({ postId, lang, dict, initialLiked, initialCount, sig
   if (!signedIn) {
     return (
       <a
-        href={`/${lang}/auth/login`}
+        href={`/${lang}/login`}
         className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm text-neutral-600 hover:bg-neutral-100 dark:text-neutral-300 dark:hover:bg-neutral-800"
         aria-label={dict.social.like}
       >

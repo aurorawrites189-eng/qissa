@@ -108,7 +108,7 @@ export default function SignupPage() {
       <p className="mt-6 text-sm text-neutral-500">
         {dict.auth.haveAccount}{" "}
         <Link
-          href={`/${locale}/auth/login`}
+          href={`/${locale}/login`}
           className="text-emerald-700 hover:underline dark:text-emerald-400"
         >
           {dict.auth.loginButton}

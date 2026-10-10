@@ -57,7 +57,7 @@ export default function VerifyPage() {
       </div>
 
       <Link
-        href={`/${locale}/auth/login`}
+        href={`/${locale}/login`}
         className="mt-6 inline-block text-sm text-emerald-700 hover:underline dark:text-emerald-400"
       >
         {dict.auth.backToLogin}

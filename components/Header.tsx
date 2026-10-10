@@ -87,12 +87,12 @@ export function Header({ locale, dict }: { locale: Locale; dict: Dictionary }) {
           ) : (
             <>
               <Link
-                href={`/${locale}/auth/login`}
+                href={`/${locale}/login`}
                 className="rounded-lg px-3 py-2 text-sm text-neutral-700 hover:bg-neutral-100 dark:text-neutral-200 dark:hover:bg-neutral-800"
               >
                 {dict.nav.login}
               </Link>
-              <Link href={`/${locale}/auth/signup`}>
+              <Link href={`/${locale}/signup`}>
                 <Button>{dict.nav.signup}</Button>
               </Link>
             </>

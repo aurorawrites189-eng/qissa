@@ -72,7 +72,7 @@ export default function LoginPage() {
         <p className="text-neutral-500">
           {dict.auth.noAccount}{" "}
           <Link
-            href={`/${locale}/auth/signup`}
+            href={`/${locale}/signup`}
             className="text-emerald-700 hover:underline dark:text-emerald-400"
           >
             {dict.auth.signupButton}

@@ -45,7 +45,7 @@ export default async function DashboardPage({ params: _params }: { params: Promi
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  if (!user) redirect(`/${lang}/auth/login`);
+  if (!user) redirect(`/${lang}/login`);
 
   const { data: profile } = await supabase
     .from("profiles")
@@ -54,7 +54,7 @@ export default async function DashboardPage({ params: _params }: { params: Promi
     )
     .eq("id", user.id)
     .maybeSingle();
-  if (!profile) redirect(`/${lang}/auth/login`);
+  if (!profile) redirect(`/${lang}/login`);
   if (profile.age_class === "child") redirect(`/${lang}/kids`);
 
   const me = user.id;

@@ -1,1 +1,169 @@
-{"admin":{"appeals":{"done":"Decision recorded.","empty":"No open appeals.","message":"Appeal message","overturn":"Overturn","title":"Appeals","type":"Type","uphold":"Uphold","violation":"Violation"},"audit":{"action":"Action","admin":"Admin","date":"Date","empty":"No moderation actions yet.","reason":"Reason","target":"Target","title":"Audit log"},"dashboard":{"kidsQueue":"Kids approvals","openAppeals":"Open appeals","openReports":"Open reports","pendingReview":"Pending review","stories":"Stories","title":"Admin dashboard","users":"Users","viewAll":"View all"},"kids":{"empty":"No kids stories waiting for approval.","subtitle":"Approve stories for the kids section. Only approve age-appropriate, original stories.","title":"Kids story approvals"},"moderation":{"approve":"Approve","approveKids":"Approve for kids","confirm":"Confirm","dismiss":"Dismiss","done":"Done.","empty":"Nothing waiting here.","reasonLabel":"Reason (shown to the author)","reasonPlaceholder":"Explain the decision…","reject":"Reject","reportedBy":"Reported by","similarity":"Similarity","status":"Status","story":"Story","tabOriginality":"Originality holds","tabPosts":"Stories","tabReports":"Reports","title":"Moderation","uphold":"Uphold","viewEvidence":"View evidence","withhold":"Withhold"},"nav":{"appeals":"Appeals","audit":"Audit log","kids":"Kids approvals","moderation":"Moderation","users":"Users"},"originalityStatus":{"low":"Likely original","possible_duplication":"Needs review","strong_evidence":"Strong match"},"users":{"confirmSuspend":"Suspend this user for 30 days?","done":"Done.","empty":"No users found.","makeAdmin":"Make admin","removeAdmin":"Remove admin","roleAdmin":"Admin","roleAdult":"Adult","roleChild":"Child","search":"Search","searchPlaceholder":"Search by username…","strikes":"Strikes","suspend":"Suspend","suspended":"Suspended","title":"Users","unsuspend":"Unsuspend","until":"until"}},"appeals":{"body":"Tell us why you believe the violation was a mistake. A moderator will review it.","error":"Could not submit the appeal. Please try again.","messageLabel":"Your explanation","messagePlaceholder":"Explain in your own words…","submit":"Submit appeal","success":"Your appeal has been submitted. We'll notify you of the decision.","title":"Appeal a violation"},"comments":{"empty":"No comments yet. Be the first to share your thoughts!","error":"Could not post your comment. Please try again.","kidsOff":"Comments are turned off for kids accounts.","placeholder":"Share your thoughts…","signIn":"Sign in to join the discussion.","submit":"Post comment","title":"Comments"},"notifications":{"empty":"You're all caught up!","markAllRead":"Mark all as read","title":"Notifications","types":{"appeal_overturned":"Good news — your appeal was accepted and the violation was overturned.","appeal_rejected":"Your appeal was reviewed but not accepted. The violation stands.","kids_approved":"Your story “{title}” was approved for the kids section!","moderation_approved":"Your story “{title}” was approved and published.","moderation_rejected":"Your story “{title}” was not approved. Reason: {reason}","new_comment":"{username} commented on your story “{title}”.","new_follower":"{username} started following you.","originality_flagged":"Your story “{title}” looks similar to stories already on Qissa, so it's waiting for a human review. If you quoted or adapted someone's work, add clear attribution — or explain that it's original.","originality_passed":"Your story “{title}” passed the originality check and is now published.","originality_withheld":"Your story “{title}” was withheld: it closely matches existing stories. A violation was recorded, but you can appeal if you believe this is a mistake.","report_received":"We received your report. Our moderators will take a look.","strike_warning":"Strike {count} of 3: a violation was confirmed on your account. {remaining} more strike(s) will suspend your account for 30 days. You can appeal from your dashboard.","suspended":"Your account is suspended until {date} after 3 confirmed violations. You can still appeal.","unsuspended":"Your suspension has been lifted. Please follow the community guidelines."},"viewStory":"View story"},"reader":{"by":"By","likes":"{count} likes","notFound":"Story not found.","notFoundBody":"It may have been removed, or you may not have permission to view it.","publishedOn":"Published {date}","signInToInteract":"Sign in to like, save or comment.","tags":"Tags","views":"{count} views"},"search":{"noResults":"No results found. Try different words.","placeholder":"Search stories and authors…","resultsFor":"Results for “{q}”","tabAuthors":"Authors","tabPosts":"Stories"},"social":{"follow":"Follow","followers":"followers","following":"Following","like":"Like","liked":"Liked","report":"Report","reportDetails":"Details (optional)","reportDetailsPlaceholder":"What did you notice?","reportError":"Could not submit the report. Please try again.","reportReason":"Reason","reportReasonPlaceholder":"e.g. copied content, hate speech, spam…","reportSuccess":"Thank you. Our moderators will review this story.","reportTitle":"Report this story","save":"Save","saved":"Saved","submitReport":"Submit report"}}
+{
+ "admin": {
+  "appeals": {
+   "done": "Decision recorded.",
+   "empty": "No open appeals.",
+   "message": "Appeal message",
+   "overturn": "Overturn",
+   "title": "Appeals",
+   "type": "Type",
+   "uphold": "Uphold",
+   "violation": "Violation"
+  },
+  "audit": {
+   "action": "Action",
+   "admin": "Admin",
+   "date": "Date",
+   "empty": "No moderation actions yet.",
+   "reason": "Reason",
+   "target": "Target",
+   "title": "Audit log"
+  },
+  "dashboard": {
+   "kidsQueue": "Kids approvals",
+   "openAppeals": "Open appeals",
+   "openReports": "Open reports",
+   "pendingReview": "Pending review",
+   "stories": "Stories",
+   "title": "Admin dashboard",
+   "users": "Users",
+   "viewAll": "View all"
+  },
+  "kids": {
+   "empty": "No kids stories waiting for approval.",
+   "subtitle": "Approve stories for the kids section. Only approve age-appropriate, original stories.",
+   "title": "Kids story approvals"
+  },
+  "moderation": {
+   "approve": "Approve",
+   "approveKids": "Approve for kids",
+   "confirm": "Confirm",
+   "dismiss": "Dismiss",
+   "done": "Done.",
+   "empty": "Nothing waiting here.",
+   "reasonLabel": "Reason (shown to the author)",
+   "reasonPlaceholder": "Explain the decision…",
+   "reject": "Reject",
+   "reportedBy": "Reported by",
+   "similarity": "Similarity",
+   "status": "Status",
+   "story": "Story",
+   "tabOriginality": "Originality holds",
+   "tabPosts": "Stories",
+   "tabReports": "Reports",
+   "title": "Moderation",
+   "uphold": "Uphold",
+   "viewEvidence": "View evidence",
+   "withhold": "Withhold"
+  },
+  "nav": {
+   "appeals": "Appeals",
+   "audit": "Audit log",
+   "kids": "Kids approvals",
+   "moderation": "Moderation",
+   "users": "Users"
+  },
+  "originalityStatus": {
+   "low": "Likely original",
+   "possible_duplication": "Needs review",
+   "strong_evidence": "Strong match"
+  },
+  "users": {
+   "confirmSuspend": "Suspend this user for 30 days?",
+   "done": "Done.",
+   "empty": "No users found.",
+   "makeAdmin": "Make admin",
+   "removeAdmin": "Remove admin",
+   "roleAdmin": "Admin",
+   "roleAdult": "Adult",
+   "roleChild": "Child",
+   "search": "Search",
+   "searchPlaceholder": "Search by username…",
+   "strikes": "Strikes",
+   "suspend": "Suspend",
+   "suspended": "Suspended",
+   "title": "Users",
+   "unsuspend": "Unsuspend",
+   "until": "until"
+  }
+ },
+ "appeals": {
+  "body": "Tell us why you believe the violation was a mistake. A moderator will review it.",
+  "error": "Could not submit the appeal. Please try again.",
+  "messageLabel": "Your explanation",
+  "messagePlaceholder": "Explain in your own words…",
+  "submit": "Submit appeal",
+  "success": "Your appeal has been submitted. We'll notify you of the decision.",
+  "title": "Appeal a violation"
+ },
+ "comments": {
+  "empty": "No comments yet. Be the first to share your thoughts!",
+  "error": "Could not post your comment. Please try again.",
+  "kidsOff": "Comments are turned off for kids accounts.",
+  "placeholder": "Share your thoughts…",
+  "signIn": "Sign in to join the discussion.",
+  "submit": "Post comment",
+  "title": "Comments"
+ },
+ "notifications": {
+  "empty": "You're all caught up!",
+  "markAllRead": "Mark all as read",
+  "title": "Notifications",
+  "types": {
+   "appeal_overturned": "Good news — your appeal was accepted and the violation was overturned.",
+   "appeal_rejected": "Your appeal was reviewed but not accepted. The violation stands.",
+   "kids_approved": "Your story “{title}” was approved for the kids section!",
+   "moderation_approved": "Your story “{title}” was approved and published.",
+   "moderation_rejected": "Your story “{title}” was not approved. Reason: {reason}",
+   "new_comment": "{username} commented on your story “{title}”.",
+   "new_follower": "{username} started following you.",
+   "originality_flagged": "Your story “{title}” looks similar to stories already on NazmHub, so it's waiting for a human review. If you quoted or adapted someone's work, add clear attribution — or explain that it's original.",
+   "originality_passed": "Your story “{title}” passed the originality check and is now published.",
+   "originality_withheld": "Your story “{title}” was withheld: it closely matches existing stories. A violation was recorded, but you can appeal if you believe this is a mistake.",
+   "report_received": "We received your report. Our moderators will take a look.",
+   "strike_warning": "Strike {count} of 3: a violation was confirmed on your account. {remaining} more strike(s) will suspend your account for 30 days. You can appeal from your dashboard.",
+   "suspended": "Your account is suspended until {date} after 3 confirmed violations. You can still appeal.",
+   "unsuspended": "Your suspension has been lifted. Please follow the community guidelines."
+  },
+  "viewStory": "View story"
+ },
+ "reader": {
+  "by": "By",
+  "likes": "{count} likes",
+  "notFound": "Story not found.",
+  "notFoundBody": "It may have been removed, or you may not have permission to view it.",
+  "publishedOn": "Published {date}",
+  "signInToInteract": "Sign in to like, save or comment.",
+  "tags": "Tags",
+  "views": "{count} views",
+  "teaserTitle": "Want to keep reading?",
+  "teaserBody": "You've read the beginning — sign up free to unlock the full story and join the community.",
+  "teaserSignup": "Sign up free",
+  "teaserLogin": "Log in"
+ },
+ "search": {
+  "noResults": "No results found. Try different words.",
+  "placeholder": "Search stories and authors…",
+  "resultsFor": "Results for “{q}”",
+  "tabAuthors": "Authors",
+  "tabPosts": "Stories"
+ },
+ "social": {
+  "follow": "Follow",
+  "followers": "followers",
+  "following": "Following",
+  "like": "Like",
+  "liked": "Liked",
+  "report": "Report",
+  "reportDetails": "Details (optional)",
+  "reportDetailsPlaceholder": "What did you notice?",
+  "reportError": "Could not submit the report. Please try again.",
+  "reportReason": "Reason",
+  "reportReasonPlaceholder": "e.g. copied content, hate speech, spam…",
+  "reportSuccess": "Thank you. Our moderators will review this story.",
+  "reportTitle": "Report this story",
+  "save": "Save",
+  "saved": "Saved",
+  "submitReport": "Submit report"
+ }
+}
