@@ -49,7 +49,7 @@ export default async function LangLayout({
         <LanguageProvider locale={lang} dict={dict}>
           <Header locale={lang} dict={dict} />
           <main className="flex-1">{children}</main>
-          <Footer dict={dict} />
+          <Footer dict={dict} locale={lang} />
         </LanguageProvider>
       </body>
     </html>
