@@ -133,3 +133,7 @@ middleware.ts             # session refresh + child age-gating with an
 | `npm start`       | serve the production build          |
 | `npx tsc --noEmit`| type-check                          |
 | `node scripts/seed.mjs` | seed demo users + stories      |
+
+## 🌐 Live Site
+
+**NazmHub** is live at https://qissa-37g.pages.dev — a bilingual (Urdu + English) writing and storytelling community.
