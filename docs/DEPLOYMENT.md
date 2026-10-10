@@ -122,3 +122,5 @@ that passes `next build` and fails in production.
 - Rate limiting is currently in-memory (`lib/rate-limit.ts`) — fine for
   a single instance, but move to Redis/Upstash before any multi-instance
   or high-traffic setup.
+
+**Free branded URL:** https://nazmhub.pages.dev (Cloudflare Pages project `nazmhub`, created 2026-10-10; same repo, same env vars, SITE_URL points at nazmhub.pages.dev).
