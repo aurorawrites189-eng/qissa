@@ -1,10 +1,10 @@
 /**
- * Site configuration — THE single place where the working title "Qissa" lives.
+ * Site configuration — THE single place where the site name lives.
  * All other code should import SITE from here instead of hardcoding the name.
  */
 export const SITE = {
-  name: "Qissa",
-  nameUrdu: "قصہ",
+  name: "NazmHub",
+  nameUrdu: "نظم",
   tagline: "Write. Read. Belong.",
   taglineUrdu: "لکھیں۔ پڑھیں۔ جڑیں۔",
   locales: ["en", "ur"] as const,
