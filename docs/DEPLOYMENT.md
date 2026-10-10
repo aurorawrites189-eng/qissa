@@ -1,5 +1,8 @@
 # Deployment — GitHub → Supabase → Cloudflare Pages
 
+**Production:** https://qissa-37g.pages.dev (Cloudflare Pages project `qissa`;
+`qissa.pages.dev` is owned by someone else, so Cloudflare assigned `qissa-37g`).
+
 Target: a **free-tier** deployment. Nothing below has been run end-to-end
 against live services (see `docs/LIMITATIONS.md`); treat this as a
 checklist, not a verified runbook.
