@@ -12,6 +12,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { getViewer, jsonError, parsePageParam } from "@/lib/api-helpers";
 
+export const runtime = "edge";
+
 const querySchema = z.object({
   q: z.string().trim().min(2, "Search for at least 2 characters").max(120),
   language: z.enum(["en", "ur"]).optional(),

@@ -2,15 +2,18 @@ import { createClient } from "@/lib/supabase/server";
 import { postSchema, postUpdateSchema } from "@/lib/validation";
 import { json, clientIp, rateLimitOr429, requireAdult, requireUser } from "@/lib/api/respond";
 
-type Ctx = { params: { lang: string; id: string } };
+export const runtime = "edge";
+
+type Ctx = { params: Promise<{ lang: string; id: string }> };
 
 /**
  * GET /[lang]/api/posts/[id] — single post. Visibility is enforced by RLS
  * (public.can_view_post): anonymous/adult readers see published public
  * posts, authors see their own drafts, children see kids-approved only.
  */
-export async function GET(_request: Request, { params }: Ctx) {
-  const supabase = createClient();
+export async function GET(_request: Request, { params: _params }: Ctx) {
+  const params = await _params;
+  const supabase = await createClient();
   const { data: post, error } = await supabase
     .from("posts")
     .select(
@@ -30,7 +33,7 @@ export async function GET(_request: Request, { params }: Ctx) {
   return json({ post, author: author ?? null });
 }
 
-async function ownPost(supabase: ReturnType<typeof createClient>, id: string, userId: string) {
+async function ownPost(supabase: Awaited<ReturnType<typeof createClient>>, id: string, userId: string) {
   const { data } = await supabase
     .from("posts")
     .select("id, author_id, title, content, language, category, tags, status")
@@ -70,8 +73,9 @@ async function triggerOriginalityCheck(request: Request, postId: string): Promis
  * moved to pending_review, and the originality check is triggered
  * best-effort. Adult accounts only.
  */
-export async function PATCH(request: Request, { params }: Ctx) {
-  const limited = rateLimitOr429(`posts:update:${clientIp()}`, 30, 60_000);
+export async function PATCH(request: Request, { params: _params }: Ctx) {
+  const params = await _params;
+  const limited = rateLimitOr429(`posts:update:${await clientIp()}`, 30, 60_000);
   if (limited) return limited;
 
   const auth = await requireAdult();
@@ -88,7 +92,7 @@ export async function PATCH(request: Request, { params }: Ctx) {
     return json({ error: "invalid_post", details: parsed.error.flatten().fieldErrors }, 400);
   }
 
-  const supabase = createClient();
+  const supabase = await createClient();
   const post = await ownPost(supabase, params.id, auth.ctx.user.id);
   if (!post) return json({ error: "not_found" }, 404);
 
@@ -180,8 +184,9 @@ export async function PATCH(request: Request, { params }: Ctx) {
 /**
  * DELETE /[lang]/api/posts/[id] — delete your own post. Adult accounts only.
  */
-export async function DELETE(_request: Request, { params }: Ctx) {
-  const limited = rateLimitOr429(`posts:delete:${clientIp()}`, 20, 60_000);
+export async function DELETE(_request: Request, { params: _params }: Ctx) {
+  const params = await _params;
+  const limited = rateLimitOr429(`posts:delete:${await clientIp()}`, 20, 60_000);
   if (limited) return limited;
 
   const auth = await requireUser();
@@ -189,7 +194,7 @@ export async function DELETE(_request: Request, { params }: Ctx) {
   // Explicit child guard (middleware + RLS also deny this).
   if (auth.ctx.ageClass === "child") return json({ error: "forbidden_child_account" }, 403);
 
-  const supabase = createClient();
+  const supabase = await createClient();
   const post = await ownPost(supabase, params.id, auth.ctx.user.id);
   if (!post) return json({ error: "not_found" }, 404);
 

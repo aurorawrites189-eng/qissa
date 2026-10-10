@@ -21,12 +21,14 @@ interface FeedSearchParams {
 
 /** Public story feed with language / category / text filters + pagination. */
 export default async function FeedPage({
-  params,
-  searchParams,
+  params: _params,
+  searchParams: _searchParams,
 }: {
-  params: { lang: string };
-  searchParams: FeedSearchParams;
+  params: Promise<{ lang: string }>;
+  searchParams: Promise<FeedSearchParams>;
 }) {
+  const params = await _params;
+  const searchParams = await _searchParams;
   if (!isLocale(params.lang)) notFound();
   const lang = params.lang;
   const dict = await getDictionary(lang);
@@ -36,7 +38,7 @@ export default async function FeedPage({
   const q = searchParams.q?.trim() || "";
   const page = Math.max(1, parseInt(searchParams.page ?? "1", 10) || 1);
 
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { data: categories } = await supabase
     .from("categories")

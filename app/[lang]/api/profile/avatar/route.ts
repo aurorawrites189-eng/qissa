@@ -1,6 +1,8 @@
 import { createAdminClient, createClient } from "@/lib/supabase/server";
 import { json, clientIp, rateLimitOr429, requireUser } from "@/lib/api/respond";
 
+export const runtime = "edge";
+
 const MAX_BYTES = 2 * 1024 * 1024; // 2MB — matches the avatars bucket limit
 const ALLOWED_MIME = ["image/jpeg", "image/png", "image/webp", "image/gif"];
 
@@ -23,7 +25,7 @@ const MIME_EXT: Record<string, string> = {
  * on auth.uid()) isn't the gatekeeper here — the session check above is.
  */
 export async function POST(request: Request) {
-  const limited = rateLimitOr429(`avatar:${clientIp()}`, 20, 60_000);
+  const limited = rateLimitOr429(`avatar:${await clientIp()}`, 20, 60_000);
   if (limited) return limited;
 
   const auth = await requireUser();
@@ -55,7 +57,7 @@ export async function POST(request: Request) {
   const { data: urlData } = admin.storage.from("avatars").getPublicUrl(storagePath);
   const avatarUrl = urlData.publicUrl;
 
-  const supabase = createClient();
+  const supabase = await createClient();
   const { error: profileError } = await supabase
     .from("profiles")
     .update({ avatar_url: avatarUrl })

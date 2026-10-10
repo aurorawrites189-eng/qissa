@@ -37,12 +37,13 @@ async function toKidsStories(
  * RLS guarantees a child account only ever sees kids-approved published
  * posts here, even though the query itself doesn't filter by viewer.
  */
-export default async function KidsPage({ params }: { params: { lang: string } }) {
+export default async function KidsPage({ params: _params }: { params: Promise<{ lang: string }> }) {
+  const params = await _params;
   if (!isLocale(params.lang)) notFound();
   const lang = params.lang;
   const dict = await getDictionary(lang);
 
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();

@@ -9,6 +9,10 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import "../globals.css";
 
+// Cloudflare Pages/Workers only run the Edge Runtime — this makes every
+// page under [lang] edge-compatible (required by @cloudflare/next-on-pages).
+export const runtime = "edge";
+
 export const metadata: Metadata = {
   title: {
     default: `${SITE.name} — ${SITE.tagline}`,
@@ -26,11 +30,12 @@ const THEME_INIT_SCRIPT = `(function(){try{var t=localStorage.getItem('qissa-the
 // for every route, so it renders <html>/<body> with the per-locale lang/dir.
 export default async function LangLayout({
   children,
-  params,
+  params: _params,
 }: {
   children: ReactNode;
-  params: { lang: string };
+  params: Promise<{ lang: string }>;
 }) {
+  const params = await _params;
   if (!isLocale(params.lang)) notFound();
   const lang: Locale = params.lang;
   const dict = await getDictionary(lang);

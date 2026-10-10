@@ -15,11 +15,14 @@ import {
   rateLimitWrite,
 } from "@/lib/api-helpers";
 
+export const runtime = "edge";
+
 interface RouteParams {
-  params: { lang: string; id: string };
+  params: Promise<{ lang: string; id: string }>;
 }
 
-export async function POST(req: NextRequest, { params }: RouteParams) {
+export async function POST(req: NextRequest, { params: _params }: RouteParams) {
+  const params = await _params;
   const viewer = await getViewer();
   const ctx = requireUser(viewer);
   if (isErrorResponse(ctx)) return ctx;
@@ -38,7 +41,8 @@ export async function POST(req: NextRequest, { params }: RouteParams) {
   return NextResponse.json({ saved: true });
 }
 
-export async function DELETE(req: NextRequest, { params }: RouteParams) {
+export async function DELETE(req: NextRequest, { params: _params }: RouteParams) {
+  const params = await _params;
   const viewer = await getViewer();
   const ctx = requireUser(viewer);
   if (isErrorResponse(ctx)) return ctx;

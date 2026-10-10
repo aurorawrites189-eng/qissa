@@ -20,15 +20,18 @@ import {
   parsePageParam,
 } from "@/lib/api-helpers";
 
+export const runtime = "edge";
+
 interface RouteParams {
-  params: { lang: string; id: string };
+  params: Promise<{ lang: string; id: string }>;
 }
 
 const commentBodySchema = z.object({
   content: z.string().trim().min(1, "Comment cannot be empty").max(2000, "Comment is too long"),
 });
 
-export async function GET(req: NextRequest, { params }: RouteParams) {
+export async function GET(req: NextRequest, { params: _params }: RouteParams) {
+  const params = await _params;
   const viewer = await getViewer();
   if (!viewer.userId) return jsonError("Sign in required", 401);
 
@@ -68,7 +71,8 @@ export async function GET(req: NextRequest, { params }: RouteParams) {
   });
 }
 
-export async function POST(req: NextRequest, { params }: RouteParams) {
+export async function POST(req: NextRequest, { params: _params }: RouteParams) {
+  const params = await _params;
   const viewer = await getViewer();
   const ctx = requireAdult(viewer);
   if (isErrorResponse(ctx)) return ctx;

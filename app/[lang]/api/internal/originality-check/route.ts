@@ -16,6 +16,8 @@ import { z } from "zod";
 import { runOriginalityCheck } from "@/lib/originality";
 import { jsonError, rateLimitWrite, getClientIp } from "@/lib/api-helpers";
 
+export const runtime = "edge";
+
 const bodySchema = z.object({
   postId: z.string().uuid("Invalid post id"),
 });

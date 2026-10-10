@@ -30,6 +30,8 @@ import {
   rateLimitWrite,
 } from "@/lib/api-helpers";
 
+export const runtime = "edge";
+
 const actionSchema = z.object({
   action: z.enum(["approve", "reject", "withhold", "approve_kids", "dismiss", "uphold"]),
   targetType: z.enum(["post", "report"]),

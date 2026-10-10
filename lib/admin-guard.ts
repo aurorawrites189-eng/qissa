@@ -8,7 +8,7 @@ import { createClient } from "./supabase/server";
 import type { Locale } from "./site-config";
 
 export async function requireAdminPage(lang: Locale) {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();

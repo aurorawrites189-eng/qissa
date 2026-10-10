@@ -1,6 +1,8 @@
 import type { MetadataRoute } from "next";
 import { SITE } from "@/lib/site-config";
 
+export const runtime = "edge";
+
 /**
  * robots.txt for Qissa.
  *

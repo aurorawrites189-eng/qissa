@@ -16,11 +16,14 @@ import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/server";
 import { getViewer, jsonError, rateLimitWrite } from "@/lib/api-helpers";
 
+export const runtime = "edge";
+
 interface RouteParams {
-  params: { lang: string; id: string };
+  params: Promise<{ lang: string; id: string }>;
 }
 
-export async function POST(req: NextRequest, { params }: RouteParams) {
+export async function POST(req: NextRequest, { params: _params }: RouteParams) {
+  const params = await _params;
   // Anonymous readers count too — rate-limit by IP instead of user.
   const limited = rateLimitWrite(req, `views:${params.id}`, null, 10, 60_000);
   if (limited) return limited;

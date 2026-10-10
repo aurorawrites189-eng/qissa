@@ -14,12 +14,14 @@ import { ModerationTable } from "@/components/admin/ModerationTable";
 const TABS: ModerationQueue[] = ["posts", "reports", "originality"];
 
 export default async function ModerationPage({
-  params,
-  searchParams,
+  params: _params,
+  searchParams: _searchParams,
 }: {
-  params: { lang: string };
-  searchParams: { tab?: string };
+  params: Promise<{ lang: string }>;
+  searchParams: Promise<{ tab?: string }>;
 }) {
+  const params = await _params;
+  const searchParams = await _searchParams;
   const lang = params.lang as Locale;
   await requireAdminPage(lang);
   const dict = await getDictionary(lang);

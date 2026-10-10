@@ -20,8 +20,8 @@ function getLang(formData: FormData): Locale {
   return isLocale(typeof raw === "string" ? raw : "") ? (raw as Locale) : SITE.defaultLocale;
 }
 
-function clientIp(): string {
-  const h = headers();
+async function clientIp(): Promise<string> {
+  const h = await headers();
   const forwarded = h.get("x-forwarded-for");
   if (forwarded) return forwarded.split(",")[0].trim();
   return h.get("x-real-ip") ?? "unknown";
@@ -36,7 +36,7 @@ export async function loginAction(formData: FormData): Promise<ActionResult> {
   const lang = getLang(formData);
   const dict = await getDictionary(lang);
 
-  const rl = checkRateLimit(`login:${clientIp()}`, 10, 60_000);
+  const rl = checkRateLimit(`login:${await clientIp()}`, 10, 60_000);
   if (!rl.allowed) return { error: dict.validation.tooManyAttempts };
 
   const parsed = loginSchema.safeParse({
@@ -50,7 +50,7 @@ export async function loginAction(formData: FormData): Promise<ActionResult> {
     };
   }
 
-  const supabase = createClient();
+  const supabase = await createClient();
   const { error } = await supabase.auth.signInWithPassword(parsed.data);
   if (error) return { error: dict.validation.genericError };
 
@@ -79,7 +79,7 @@ export async function signupAction(formData: FormData): Promise<ActionResult> {
   const lang = getLang(formData);
   const dict = await getDictionary(lang);
 
-  const rl = checkRateLimit(`signup:${clientIp()}`, 5, 60_000);
+  const rl = checkRateLimit(`signup:${await clientIp()}`, 5, 60_000);
   if (!rl.allowed) return { error: dict.validation.tooManyAttempts };
 
   const birthYearRaw = formData.get("birth_year");
@@ -103,7 +103,7 @@ export async function signupAction(formData: FormData): Promise<ActionResult> {
   }
   const { email, password, username, birth_year, preferred_language } = parsed.data;
 
-  const supabase = createClient();
+  const supabase = await createClient();
 
   // Username uniqueness check (schema lowercases; compare case-insensitively).
   const { data: existing } = await supabase
@@ -152,7 +152,7 @@ export async function resendVerificationAction(formData: FormData): Promise<Acti
   const lang = getLang(formData);
   const dict = await getDictionary(lang);
 
-  const rl = checkRateLimit(`resend:${clientIp()}`, 5, 60_000);
+  const rl = checkRateLimit(`resend:${await clientIp()}`, 5, 60_000);
   if (!rl.allowed) return { error: dict.validation.tooManyAttempts };
 
   const email = formData.get("email");
@@ -161,7 +161,7 @@ export async function resendVerificationAction(formData: FormData): Promise<Acti
   }
 
   const base = siteUrl();
-  const supabase = createClient();
+  const supabase = await createClient();
   await supabase.auth.resend({
     type: "signup",
     email: email.trim(),
@@ -175,7 +175,7 @@ export async function requestPasswordResetAction(formData: FormData): Promise<Ac
   const lang = getLang(formData);
   const dict = await getDictionary(lang);
 
-  const rl = checkRateLimit(`reset:${clientIp()}`, 5, 60_000);
+  const rl = checkRateLimit(`reset:${await clientIp()}`, 5, 60_000);
   if (!rl.allowed) return { error: dict.validation.tooManyAttempts };
 
   const email = formData.get("email");
@@ -184,7 +184,7 @@ export async function requestPasswordResetAction(formData: FormData): Promise<Ac
   }
 
   const base = siteUrl();
-  const supabase = createClient();
+  const supabase = await createClient();
   await supabase.auth.resetPasswordForEmail(email.trim(), {
     ...(base
       ? {
@@ -200,7 +200,7 @@ export async function updatePasswordAction(formData: FormData): Promise<ActionRe
   const lang = getLang(formData);
   const dict = await getDictionary(lang);
 
-  const rl = checkRateLimit(`updatepw:${clientIp()}`, 10, 60_000);
+  const rl = checkRateLimit(`updatepw:${await clientIp()}`, 10, 60_000);
   if (!rl.allowed) return { error: dict.validation.tooManyAttempts };
 
   const parsed = z
@@ -213,7 +213,7 @@ export async function updatePasswordAction(formData: FormData): Promise<ActionRe
     return { error: dict.validation.genericError };
   }
 
-  const supabase = createClient();
+  const supabase = await createClient();
   const { error } = await supabase.auth.updateUser({ password: parsed.data.password });
   if (error) return { error: error.message };
   return {};

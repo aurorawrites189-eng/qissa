@@ -1,0 +1,1 @@
+var t={},a=(u,c,_)=>(t.__chunk_55876=(d,e,r)=>{"use strict";r.d(e,{XF:()=>s,Zd:()=>l});let n=["en","ur"];function l(o){return n.includes(o)}let s={en:"ltr",ur:"rtl"}},t);export{a as __getNamedExports};

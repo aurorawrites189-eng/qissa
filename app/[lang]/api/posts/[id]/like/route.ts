@@ -16,8 +16,10 @@ import {
   rateLimitWrite,
 } from "@/lib/api-helpers";
 
+export const runtime = "edge";
+
 interface RouteParams {
-  params: { lang: string; id: string };
+  params: Promise<{ lang: string; id: string }>;
 }
 
 async function likeCount(postId: string): Promise<number> {
@@ -29,12 +31,13 @@ async function likeCount(postId: string): Promise<number> {
 }
 
 /** The post must be visible to the liker (RLS enforces can_view_post). */
-async function visiblePost(ctx: { supabase: ReturnType<typeof import("@/lib/supabase/server").createClient> }, postId: string) {
+async function visiblePost(ctx: { supabase: Awaited<ReturnType<typeof import("@/lib/supabase/server").createClient>> }, postId: string) {
   const { data } = await ctx.supabase.from("posts").select("id").eq("id", postId).maybeSingle();
   return data;
 }
 
-export async function POST(req: NextRequest, { params }: RouteParams) {
+export async function POST(req: NextRequest, { params: _params }: RouteParams) {
+  const params = await _params;
   const viewer = await getViewer();
   const ctx = requireAdult(viewer);
   if (isErrorResponse(ctx)) return ctx;
@@ -52,7 +55,8 @@ export async function POST(req: NextRequest, { params }: RouteParams) {
   return NextResponse.json({ liked: true, likeCount: await likeCount(params.id) });
 }
 
-export async function DELETE(req: NextRequest, { params }: RouteParams) {
+export async function DELETE(req: NextRequest, { params: _params }: RouteParams) {
+  const params = await _params;
   const viewer = await getViewer();
   const ctx = requireAdult(viewer);
   if (isErrorResponse(ctx)) return ctx;

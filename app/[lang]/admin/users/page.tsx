@@ -9,12 +9,14 @@ import type { Locale } from "@/lib/site-config";
 import { UsersTable, type AdminUser } from "@/components/admin/UsersTable";
 
 export default async function AdminUsersPage({
-  params,
-  searchParams,
+  params: _params,
+  searchParams: _searchParams,
 }: {
-  params: { lang: string };
-  searchParams: { q?: string };
+  params: Promise<{ lang: string }>;
+  searchParams: Promise<{ q?: string }>;
 }) {
+  const params = await _params;
+  const searchParams = await _searchParams;
   const lang = params.lang as Locale;
   const { user } = await requireAdminPage(lang);
   const dict = await getDictionary(lang);

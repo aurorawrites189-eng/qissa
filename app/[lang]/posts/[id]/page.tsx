@@ -24,21 +24,23 @@ import { CommentSection } from "@/components/CommentSection";
 import { ViewCounter } from "@/components/ViewCounter";
 
 interface PageParams {
-  params: { lang: string; id: string };
+  params: Promise<{ lang: string; id: string }>;
 }
 
 async function loadPost(id: string) {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data: post } = await supabase.from("posts").select("*").eq("id", id).maybeSingle();
   return { supabase, post };
 }
 
-export async function generateMetadata({ params }: PageParams): Promise<Metadata> {
+export async function generateMetadata({ params: _params }: PageParams): Promise<Metadata> {
+  const params = await _params;
   const { post } = await loadPost(params.id);
   return { title: post?.title ?? "Story" };
 }
 
-export default async function PostReaderPage({ params }: PageParams) {
+export default async function PostReaderPage({ params: _params }: PageParams) {
+  const params = await _params;
   const lang = params.lang as Locale;
   const dict = await getDictionary(lang);
   const { supabase, post } = await loadPost(params.id);

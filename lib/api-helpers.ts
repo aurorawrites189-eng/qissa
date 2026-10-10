@@ -18,14 +18,14 @@ export interface ViewerProfile {
 }
 
 export interface ViewerContext {
-  supabase: ReturnType<typeof createClient>;
+  supabase: Awaited<ReturnType<typeof createClient>>;
   userId: string | null;
   profile: ViewerProfile | null;
 }
 
 /** Session + own profile (RLS-safe: users can always read their own row). */
 export async function getViewer(): Promise<ViewerContext> {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();

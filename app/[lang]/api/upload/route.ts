@@ -1,6 +1,7 @@
-import { randomUUID } from "crypto";
 import { createAdminClient } from "@/lib/supabase/server";
 import { json, clientIp, rateLimitOr429, requireAdult } from "@/lib/api/respond";
+
+export const runtime = "edge";
 
 const MAX_BYTES = 5 * 1024 * 1024; // 5MB — matches the post-images bucket limit
 const ALLOWED_MIME = ["image/jpeg", "image/png", "image/webp", "image/gif"];
@@ -22,7 +23,7 @@ const MIME_EXT: Record<string, string> = {
  * age_class). Adult accounts only — children get an explicit 403.
  */
 export async function POST(request: Request) {
-  const limited = rateLimitOr429(`upload:${clientIp()}`, 20, 60_000);
+  const limited = rateLimitOr429(`upload:${await clientIp()}`, 20, 60_000);
   if (limited) return limited;
 
   const auth = await requireAdult();
@@ -42,7 +43,7 @@ export async function POST(request: Request) {
   if (file.size === 0) return json({ error: "file_empty" }, 400);
 
   const ext = MIME_EXT[file.type] ?? "jpg";
-  const storagePath = `${auth.ctx.user.id}/${randomUUID()}.${ext}`;
+  const storagePath = `${auth.ctx.user.id}/${crypto.randomUUID()}.${ext}`;
 
   const admin = createAdminClient();
   const bytes = new Uint8Array(await file.arrayBuffer());

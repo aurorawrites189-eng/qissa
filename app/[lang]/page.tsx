@@ -5,7 +5,8 @@ import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { isLocale } from "@/lib/i18n/config";
 import { Button } from "@/components/ui/Button";
 
-export default async function HomePage({ params }: { params: { lang: string } }) {
+export default async function HomePage({ params: _params }: { params: Promise<{ lang: string }> }) {
+  const params = await _params;
   if (!isLocale(params.lang)) notFound();
   const lang = params.lang;
   const dict = await getDictionary(lang);

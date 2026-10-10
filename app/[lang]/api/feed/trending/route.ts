@@ -13,6 +13,8 @@ import { createAdminClient } from "@/lib/supabase/server";
 import { getViewer, jsonError, parsePageParam } from "@/lib/api-helpers";
 import { LIKE_WEIGHT, TRENDING_WINDOW_DAYS } from "@/lib/trending";
 
+export const runtime = "edge";
+
 export async function GET(req: NextRequest) {
   const viewer = await getViewer();
   if (!viewer.userId) return jsonError("Sign in required", 401);

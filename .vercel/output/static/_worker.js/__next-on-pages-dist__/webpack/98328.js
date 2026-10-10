@@ -1,0 +1,1 @@
+var e={},_=(a,l,n)=>(e.__chunk_98328=(p,t,c)=>{"use strict";function o(s,r){return`${"https://placeholder.supabase.co".replace(/\/$/,"")}/storage/v1/object/public/${s}/${r}`}c.d(t,{E:()=>o})},e);export{_ as __getNamedExports};

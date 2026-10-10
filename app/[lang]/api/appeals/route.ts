@@ -17,6 +17,8 @@ import {
   rateLimitWrite,
 } from "@/lib/api-helpers";
 
+export const runtime = "edge";
+
 const fileSchema = z.object({
   violation_id: z.string().uuid("Invalid violation id"),
   message: z.string().trim().min(10, "Please explain in at least 10 characters").max(2000, "Message is too long"),

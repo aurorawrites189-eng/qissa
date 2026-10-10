@@ -2,6 +2,8 @@ import { createClient } from "@/lib/supabase/server";
 import { postSchema, postsQuerySchema } from "@/lib/validation";
 import { json, clientIp, rateLimitOr429, requireAdult } from "@/lib/api/respond";
 
+export const runtime = "edge";
+
 /**
  * GET /[lang]/api/posts?lang=&category=&q=&page=&limit=
  * Public story feed: only published + public posts. RLS further restricts
@@ -22,7 +24,7 @@ export async function GET(request: Request) {
   }
   const { lang, category, q, page, limit } = parsed.data;
 
-  const supabase = createClient();
+  const supabase = await createClient();
   let query = supabase
     .from("posts")
     .select(
@@ -85,7 +87,7 @@ export async function GET(request: Request) {
  * (children get an explicit 403; RLS would deny the insert anyway).
  */
 export async function POST(request: Request) {
-  const limited = rateLimitOr429(`posts:create:${clientIp()}`, 20, 60_000);
+  const limited = rateLimitOr429(`posts:create:${await clientIp()}`, 20, 60_000);
   if (limited) return limited;
 
   const auth = await requireAdult();
@@ -103,7 +105,7 @@ export async function POST(request: Request) {
     return json({ error: "invalid_post", details: parsed.error.flatten().fieldErrors }, 400);
   }
 
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data, error } = await supabase
     .from("posts")
     .insert({

@@ -2,6 +2,8 @@ import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { json, clientIp, rateLimitOr429, requireUser } from "@/lib/api/respond";
 
+export const runtime = "edge";
+
 const historySchema = z.object({
   post_id: z.string().uuid("Invalid post id"),
 });
@@ -19,7 +21,7 @@ const historySchema = z.object({
  * best-effort; nothing else depends on it.
  */
 export async function POST(request: Request) {
-  const limited = rateLimitOr429(`kids:history:${clientIp()}`, 60, 60_000);
+  const limited = rateLimitOr429(`kids:history:${await clientIp()}`, 60, 60_000);
   if (limited) return limited;
 
   const auth = await requireUser();
@@ -34,7 +36,7 @@ export async function POST(request: Request) {
   const parsed = historySchema.safeParse(body);
   if (!parsed.success) return json({ error: "invalid_post_id" }, 400);
 
-  const supabase = createClient();
+  const supabase = await createClient();
   const { error } = await supabase.from("reading_history").upsert(
     {
       user_id: auth.ctx.user.id,

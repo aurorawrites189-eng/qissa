@@ -4,6 +4,8 @@ import type { CookieOptions } from "@supabase/ssr";
 import { isLocale } from "@/lib/i18n/config";
 import { SITE } from "@/lib/site-config";
 
+export const runtime = "edge";
+
 function homeUrl(request: NextRequest): URL {
   const seg = new URL(request.url).pathname.split("/")[1];
   const lang = isLocale(seg) ? seg : SITE.defaultLocale;

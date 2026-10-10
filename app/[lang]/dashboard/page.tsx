@@ -32,7 +32,8 @@ const statusLabel = (status: string, d: { published: string; pendingReview: stri
  * drafts), saved stories, followers & following, notifications and the
  * read-only violations/strikes history.
  */
-export default async function DashboardPage({ params }: { params: { lang: string } }) {
+export default async function DashboardPage({ params: _params }: { params: Promise<{ lang: string }> }) {
+  const params = await _params;
   if (!isLocale(params.lang)) notFound();
   const lang = params.lang;
   const dict = await getDictionary(lang);
@@ -40,7 +41,7 @@ export default async function DashboardPage({ params }: { params: { lang: string
 
   // Explicit age-class check: children are redirected to Kids' Corner.
   // (Middleware does this too; RLS is the final enforcer on every query.)
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();

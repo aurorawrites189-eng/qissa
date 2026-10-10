@@ -14,6 +14,8 @@ import {
   parsePageParam,
 } from "@/lib/api-helpers";
 
+export const runtime = "edge";
+
 const patchSchema = z
   .object({
     ids: z.array(z.string().uuid()).max(100).optional(),

@@ -1,0 +1,1 @@
+var o={},u=(c,f,_)=>(o.__chunk_72483=(d,s,n)=>{"use strict";async function a(i,e,t,l={}){let{error:r}=await i.from("notifications").insert({user_id:e,type:t,payload:l});return!r||(console.error(`[notify] failed for user ${e} type ${t}:`,r.message),!1)}n.d(s,{m:()=>a})},o);export{u as __getNamedExports};

@@ -23,6 +23,8 @@ import {
   parsePageParam,
 } from "@/lib/api-helpers";
 
+export const runtime = "edge";
+
 const actionSchema = z.object({
   action: z.enum(["suspend", "unsuspend", "make_admin", "remove_admin"]),
   userId: z.string().uuid("Invalid user id"),

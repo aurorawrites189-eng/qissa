@@ -6,7 +6,8 @@ import { createAdminClient } from "@/lib/supabase/server";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
 import type { Locale } from "@/lib/site-config";
 
-export default async function AuditLogPage({ params }: { params: { lang: string } }) {
+export default async function AuditLogPage({ params: _params }: { params: Promise<{ lang: string }> }) {
+  const params = await _params;
   const lang = params.lang as Locale;
   await requireAdminPage(lang);
   const dict = await getDictionary(lang);

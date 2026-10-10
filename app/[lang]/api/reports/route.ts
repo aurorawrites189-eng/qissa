@@ -16,6 +16,8 @@ import {
   rateLimitWrite,
 } from "@/lib/api-helpers";
 
+export const runtime = "edge";
+
 export async function POST(req: NextRequest) {
   const viewer = await getViewer();
   const ctx = requireUser(viewer);

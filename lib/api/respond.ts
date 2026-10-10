@@ -7,8 +7,8 @@ export function json(data: unknown, status = 200): Response {
   return Response.json(data, { status });
 }
 
-export function clientIp(): string {
-  const h = headers();
+export async function clientIp(): Promise<string> {
+  const h = await headers();
   const forwarded = h.get("x-forwarded-for");
   if (forwarded) return forwarded.split(",")[0].trim();
   return h.get("x-real-ip") ?? "unknown";
@@ -40,7 +40,7 @@ export interface AuthedContext {
  * a 401 to return directly from the route handler.
  */
 export async function requireUser(): Promise<{ ctx: AuthedContext } | { response: Response }> {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();

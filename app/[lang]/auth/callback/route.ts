@@ -3,6 +3,8 @@ import { createServerClient } from "@supabase/ssr";
 import type { CookieOptions } from "@supabase/ssr";
 import { SITE } from "@/lib/site-config";
 
+export const runtime = "edge";
+
 /**
  * Handles Supabase auth redirects (email verification, password recovery):
  * exchanges the `code` for a session, then redirects to `?next=` (relative

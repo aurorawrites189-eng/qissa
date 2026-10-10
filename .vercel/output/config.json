@@ -1,0 +1,911 @@
+{
+  "version": 3,
+  "routes": [
+    {
+      "src": "^(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))/$",
+      "headers": {
+        "Location": "/$1"
+      },
+      "status": 308,
+      "continue": true
+    },
+    {
+      "src": "/_next/__private/trace",
+      "dest": "/404",
+      "status": 404,
+      "continue": true
+    },
+    {
+      "src": "/404/?",
+      "status": 404,
+      "continue": true,
+      "missing": [
+        {
+          "type": "header",
+          "key": "x-prerender-revalidate"
+        }
+      ]
+    },
+    {
+      "src": "/500",
+      "status": 500,
+      "continue": true
+    },
+    {
+      "src": "^/_next/data/0sfcxJ1wXkknBZOiL8zSY/(.*).json",
+      "dest": "/$1",
+      "override": true,
+      "continue": true,
+      "has": [
+        {
+          "type": "header",
+          "key": "x-nextjs-data"
+        }
+      ]
+    },
+    {
+      "src": "^/index(?:/)?",
+      "has": [
+        {
+          "type": "header",
+          "key": "x-nextjs-data"
+        }
+      ],
+      "dest": "/",
+      "override": true,
+      "continue": true
+    },
+    {
+      "src": "/(.*)",
+      "has": [
+        {
+          "type": "header",
+          "key": "next-action",
+          "value": "404435e19f0fafd0bb9478367be570abde6fe8551e"
+        }
+      ],
+      "transforms": [
+        {
+          "type": "request.headers",
+          "op": "append",
+          "target": {
+            "key": "x-server-action-name"
+          },
+          "args": "app/[lang]/(auth)/actions.ts#requestPasswordResetAction"
+        }
+      ]
+    },
+    {
+      "src": "/(.*)",
+      "has": [
+        {
+          "type": "header",
+          "key": "next-action",
+          "value": "40697c5ceeda107083d4c2c8f8fe3cdd18c3aba592"
+        }
+      ],
+      "transforms": [
+        {
+          "type": "request.headers",
+          "op": "append",
+          "target": {
+            "key": "x-server-action-name"
+          },
+          "args": "app/[lang]/(auth)/actions.ts#loginAction"
+        }
+      ]
+    },
+    {
+      "src": "/(.*)",
+      "has": [
+        {
+          "type": "header",
+          "key": "next-action",
+          "value": "40bbf86f4afd73e4be1ef0c8ed015aa1919e0a7468"
+        }
+      ],
+      "transforms": [
+        {
+          "type": "request.headers",
+          "op": "append",
+          "target": {
+            "key": "x-server-action-name"
+          },
+          "args": "app/[lang]/(auth)/actions.ts#signupAction"
+        }
+      ]
+    },
+    {
+      "src": "/(.*)",
+      "has": [
+        {
+          "type": "header",
+          "key": "next-action",
+          "value": "40c7089920dde6e3e5921a96e7072a8a32763c365d"
+        }
+      ],
+      "transforms": [
+        {
+          "type": "request.headers",
+          "op": "append",
+          "target": {
+            "key": "x-server-action-name"
+          },
+          "args": "app/[lang]/(auth)/actions.ts#resendVerificationAction"
+        }
+      ]
+    },
+    {
+      "src": "/(.*)",
+      "has": [
+        {
+          "type": "header",
+          "key": "next-action",
+          "value": "40ea1977f52174d6d42ce9f26533eb34a4d75a11c4"
+        }
+      ],
+      "transforms": [
+        {
+          "type": "request.headers",
+          "op": "append",
+          "target": {
+            "key": "x-server-action-name"
+          },
+          "args": "app/[lang]/(auth)/actions.ts#updatePasswordAction"
+        }
+      ]
+    },
+    {
+      "continue": true,
+      "src": "^(?:\\/(_next\\/data\\/[^/]{1,}))?(?:\\/((?!_next\\/static|_next\\/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*))(\\.json)?[\\/#\\?]?$",
+      "missing": [
+        {
+          "type": "header",
+          "key": "x-prerender-revalidate",
+          "value": "97cf27468c4259262c2ee2ea7c5f5573"
+        }
+      ],
+      "middlewarePath": "middleware",
+      "middlewareRawSrc": [
+        "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)"
+      ],
+      "override": true
+    },
+    {
+      "src": "^/$",
+      "has": [
+        {
+          "type": "header",
+          "key": "x-nextjs-data"
+        }
+      ],
+      "dest": "/_next/data/0sfcxJ1wXkknBZOiL8zSY/index.json",
+      "continue": true,
+      "override": true
+    },
+    {
+      "src": "^/((?!_next/)(?:.*[^/]|.*))/?$",
+      "has": [
+        {
+          "type": "header",
+          "key": "x-nextjs-data"
+        }
+      ],
+      "dest": "/_next/data/0sfcxJ1wXkknBZOiL8zSY/$1.json",
+      "continue": true,
+      "override": true
+    },
+    {
+      "src": "^/?",
+      "has": [
+        {
+          "type": "header",
+          "key": "rsc",
+          "value": "1"
+        }
+      ],
+      "dest": "/index.rsc",
+      "headers": {
+        "vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch"
+      },
+      "continue": true,
+      "override": true
+    },
+    {
+      "src": "^/((?!.+\\.rsc).+?)(?:/)?$",
+      "has": [
+        {
+          "type": "header",
+          "key": "rsc",
+          "value": "1"
+        }
+      ],
+      "dest": "/$1.rsc",
+      "headers": {
+        "vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch"
+      },
+      "continue": true,
+      "override": true
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "^/_next/data/0sfcxJ1wXkknBZOiL8zSY/(.*).json",
+      "dest": "/$1",
+      "continue": true,
+      "has": [
+        {
+          "type": "header",
+          "key": "x-nextjs-data"
+        }
+      ]
+    },
+    {
+      "src": "^/index(?:/)?",
+      "has": [
+        {
+          "type": "header",
+          "key": "x-nextjs-data"
+        }
+      ],
+      "dest": "/",
+      "continue": true
+    },
+    {
+      "src": "/index(\\.action|\\.rsc)",
+      "dest": "/",
+      "continue": true
+    },
+    {
+      "src": "/\\.prefetch\\.rsc$",
+      "dest": "/__index.prefetch.rsc",
+      "check": true
+    },
+    {
+      "src": "/(.+)/\\.prefetch\\.rsc$",
+      "dest": "/$1.prefetch.rsc",
+      "check": true
+    },
+    {
+      "src": "/\\.rsc$",
+      "dest": "/index.rsc",
+      "check": true
+    },
+    {
+      "src": "/(.+)/\\.rsc$",
+      "dest": "/$1.rsc",
+      "check": true
+    },
+    {
+      "handle": "resource"
+    },
+    {
+      "src": "/.*",
+      "status": 404
+    },
+    {
+      "handle": "miss"
+    },
+    {
+      "src": "/_next/static/.+",
+      "status": 404,
+      "check": true,
+      "dest": "/_next/static/not-found.txt",
+      "headers": {
+        "content-type": "text/plain; charset=utf-8"
+      }
+    },
+    {
+      "handle": "rewrite"
+    },
+    {
+      "src": "^/$",
+      "has": [
+        {
+          "type": "header",
+          "key": "x-nextjs-data"
+        }
+      ],
+      "dest": "/_next/data/0sfcxJ1wXkknBZOiL8zSY/index.json",
+      "continue": true
+    },
+    {
+      "src": "^/((?!_next/)(?:.*[^/]|.*))/?$",
+      "has": [
+        {
+          "type": "header",
+          "key": "x-nextjs-data"
+        }
+      ],
+      "dest": "/_next/data/0sfcxJ1wXkknBZOiL8zSY/$1.json",
+      "continue": true
+    },
+    {
+      "src": "^/_next/data/0sfcxJ1wXkknBZOiL8zSY/(?<nxtPlang>[^/]+?)(?:/)?.json$",
+      "dest": "/[lang]?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/_next/data/0sfcxJ1wXkknBZOiL8zSY/(?<nxtPlang>[^/]+?)/admin(?:/)?.json$",
+      "dest": "/[lang]/admin?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/_next/data/0sfcxJ1wXkknBZOiL8zSY/(?<nxtPlang>[^/]+?)/admin/appeals(?:/)?.json$",
+      "dest": "/[lang]/admin/appeals?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/_next/data/0sfcxJ1wXkknBZOiL8zSY/(?<nxtPlang>[^/]+?)/admin/audit(?:/)?.json$",
+      "dest": "/[lang]/admin/audit?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/_next/data/0sfcxJ1wXkknBZOiL8zSY/(?<nxtPlang>[^/]+?)/admin/kids(?:/)?.json$",
+      "dest": "/[lang]/admin/kids?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/_next/data/0sfcxJ1wXkknBZOiL8zSY/(?<nxtPlang>[^/]+?)/admin/moderation(?:/)?.json$",
+      "dest": "/[lang]/admin/moderation?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/_next/data/0sfcxJ1wXkknBZOiL8zSY/(?<nxtPlang>[^/]+?)/admin/users(?:/)?.json$",
+      "dest": "/[lang]/admin/users?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/_next/data/0sfcxJ1wXkknBZOiL8zSY/(?<nxtPlang>[^/]+?)/api/admin/moderation(?:/)?.json$",
+      "dest": "/[lang]/api/admin/moderation?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/_next/data/0sfcxJ1wXkknBZOiL8zSY/(?<nxtPlang>[^/]+?)/api/admin/users(?:/)?.json$",
+      "dest": "/[lang]/api/admin/users?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/_next/data/0sfcxJ1wXkknBZOiL8zSY/(?<nxtPlang>[^/]+?)/api/appeals(?:/)?.json$",
+      "dest": "/[lang]/api/appeals?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/_next/data/0sfcxJ1wXkknBZOiL8zSY/(?<nxtPlang>[^/]+?)/api/feed/trending(?:/)?.json$",
+      "dest": "/[lang]/api/feed/trending?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/_next/data/0sfcxJ1wXkknBZOiL8zSY/(?<nxtPlang>[^/]+?)/api/follow/(?<nxtPusername>[^/]+?)(?:/)?.json$",
+      "dest": "/[lang]/api/follow/[username]?nxtPlang=$nxtPlang&nxtPusername=$nxtPusername"
+    },
+    {
+      "src": "^/_next/data/0sfcxJ1wXkknBZOiL8zSY/(?<nxtPlang>[^/]+?)/api/internal/originality\\-check(?:/)?.json$",
+      "dest": "/[lang]/api/internal/originality-check?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/_next/data/0sfcxJ1wXkknBZOiL8zSY/(?<nxtPlang>[^/]+?)/api/kids/history(?:/)?.json$",
+      "dest": "/[lang]/api/kids/history?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/_next/data/0sfcxJ1wXkknBZOiL8zSY/(?<nxtPlang>[^/]+?)/api/notifications(?:/)?.json$",
+      "dest": "/[lang]/api/notifications?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/_next/data/0sfcxJ1wXkknBZOiL8zSY/(?<nxtPlang>[^/]+?)/api/posts(?:/)?.json$",
+      "dest": "/[lang]/api/posts?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/_next/data/0sfcxJ1wXkknBZOiL8zSY/(?<nxtPlang>[^/]+?)/api/posts/(?<nxtPid>[^/]+?)(?:/)?.json$",
+      "dest": "/[lang]/api/posts/[id]?nxtPlang=$nxtPlang&nxtPid=$nxtPid"
+    },
+    {
+      "src": "^/_next/data/0sfcxJ1wXkknBZOiL8zSY/(?<nxtPlang>[^/]+?)/api/posts/(?<nxtPid>[^/]+?)/comments(?:/)?.json$",
+      "dest": "/[lang]/api/posts/[id]/comments?nxtPlang=$nxtPlang&nxtPid=$nxtPid"
+    },
+    {
+      "src": "^/_next/data/0sfcxJ1wXkknBZOiL8zSY/(?<nxtPlang>[^/]+?)/api/posts/(?<nxtPid>[^/]+?)/like(?:/)?.json$",
+      "dest": "/[lang]/api/posts/[id]/like?nxtPlang=$nxtPlang&nxtPid=$nxtPid"
+    },
+    {
+      "src": "^/_next/data/0sfcxJ1wXkknBZOiL8zSY/(?<nxtPlang>[^/]+?)/api/posts/(?<nxtPid>[^/]+?)/save(?:/)?.json$",
+      "dest": "/[lang]/api/posts/[id]/save?nxtPlang=$nxtPlang&nxtPid=$nxtPid"
+    },
+    {
+      "src": "^/_next/data/0sfcxJ1wXkknBZOiL8zSY/(?<nxtPlang>[^/]+?)/api/posts/(?<nxtPid>[^/]+?)/views(?:/)?.json$",
+      "dest": "/[lang]/api/posts/[id]/views?nxtPlang=$nxtPlang&nxtPid=$nxtPid"
+    },
+    {
+      "src": "^/_next/data/0sfcxJ1wXkknBZOiL8zSY/(?<nxtPlang>[^/]+?)/api/profile(?:/)?.json$",
+      "dest": "/[lang]/api/profile?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/_next/data/0sfcxJ1wXkknBZOiL8zSY/(?<nxtPlang>[^/]+?)/api/profile/avatar(?:/)?.json$",
+      "dest": "/[lang]/api/profile/avatar?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/_next/data/0sfcxJ1wXkknBZOiL8zSY/(?<nxtPlang>[^/]+?)/api/reports(?:/)?.json$",
+      "dest": "/[lang]/api/reports?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/_next/data/0sfcxJ1wXkknBZOiL8zSY/(?<nxtPlang>[^/]+?)/api/search(?:/)?.json$",
+      "dest": "/[lang]/api/search?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/_next/data/0sfcxJ1wXkknBZOiL8zSY/(?<nxtPlang>[^/]+?)/api/upload(?:/)?.json$",
+      "dest": "/[lang]/api/upload?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/_next/data/0sfcxJ1wXkknBZOiL8zSY/(?<nxtPlang>[^/]+?)/auth/callback(?:/)?.json$",
+      "dest": "/[lang]/auth/callback?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/_next/data/0sfcxJ1wXkknBZOiL8zSY/(?<nxtPlang>[^/]+?)/auth/signout(?:/)?.json$",
+      "dest": "/[lang]/auth/signout?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/_next/data/0sfcxJ1wXkknBZOiL8zSY/(?<nxtPlang>[^/]+?)/dashboard(?:/)?.json$",
+      "dest": "/[lang]/dashboard?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/_next/data/0sfcxJ1wXkknBZOiL8zSY/(?<nxtPlang>[^/]+?)/feed(?:/)?.json$",
+      "dest": "/[lang]/feed?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/_next/data/0sfcxJ1wXkknBZOiL8zSY/(?<nxtPlang>[^/]+?)/kids(?:/)?.json$",
+      "dest": "/[lang]/kids?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/_next/data/0sfcxJ1wXkknBZOiL8zSY/(?<nxtPlang>[^/]+?)/kids/story/(?<nxtPid>[^/]+?)(?:/)?.json$",
+      "dest": "/[lang]/kids/story/[id]?nxtPlang=$nxtPlang&nxtPid=$nxtPid"
+    },
+    {
+      "src": "^/_next/data/0sfcxJ1wXkknBZOiL8zSY/(?<nxtPlang>[^/]+?)/login(?:/)?.json$",
+      "dest": "/[lang]/login?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/_next/data/0sfcxJ1wXkknBZOiL8zSY/(?<nxtPlang>[^/]+?)/posts/(?<nxtPid>[^/]+?)(?:/)?.json$",
+      "dest": "/[lang]/posts/[id]?nxtPlang=$nxtPlang&nxtPid=$nxtPid"
+    },
+    {
+      "src": "^/_next/data/0sfcxJ1wXkknBZOiL8zSY/(?<nxtPlang>[^/]+?)/reset\\-password(?:/)?.json$",
+      "dest": "/[lang]/reset-password?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/_next/data/0sfcxJ1wXkknBZOiL8zSY/(?<nxtPlang>[^/]+?)/signup(?:/)?.json$",
+      "dest": "/[lang]/signup?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/_next/data/0sfcxJ1wXkknBZOiL8zSY/(?<nxtPlang>[^/]+?)/verify(?:/)?.json$",
+      "dest": "/[lang]/verify?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/_next/data/0sfcxJ1wXkknBZOiL8zSY/(?<nxtPlang>[^/]+?)/write(?:/)?.json$",
+      "dest": "/[lang]/write?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/_next/data/0sfcxJ1wXkknBZOiL8zSY/(?<nxtPlang>[^/]+?)/write/(?<nxtPid>[^/]+?)(?:/)?.json$",
+      "dest": "/[lang]/write/[id]?nxtPlang=$nxtPlang&nxtPid=$nxtPid"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)(?:\\.rsc)(?:/)?$",
+      "dest": "/[lang].rsc?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)(?:/)?$",
+      "dest": "/[lang]?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/admin(?:\\.rsc)(?:/)?$",
+      "dest": "/[lang]/admin.rsc?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/admin(?:/)?$",
+      "dest": "/[lang]/admin?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/admin/appeals(?:\\.rsc)(?:/)?$",
+      "dest": "/[lang]/admin/appeals.rsc?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/admin/appeals(?:/)?$",
+      "dest": "/[lang]/admin/appeals?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/admin/audit(?:\\.rsc)(?:/)?$",
+      "dest": "/[lang]/admin/audit.rsc?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/admin/audit(?:/)?$",
+      "dest": "/[lang]/admin/audit?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/admin/kids(?:\\.rsc)(?:/)?$",
+      "dest": "/[lang]/admin/kids.rsc?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/admin/kids(?:/)?$",
+      "dest": "/[lang]/admin/kids?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/admin/moderation(?:\\.rsc)(?:/)?$",
+      "dest": "/[lang]/admin/moderation.rsc?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/admin/moderation(?:/)?$",
+      "dest": "/[lang]/admin/moderation?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/admin/users(?:\\.rsc)(?:/)?$",
+      "dest": "/[lang]/admin/users.rsc?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/admin/users(?:/)?$",
+      "dest": "/[lang]/admin/users?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/api/admin/moderation(?:\\.rsc)(?:/)?$",
+      "dest": "/[lang]/api/admin/moderation.rsc?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/api/admin/moderation(?:/)?$",
+      "dest": "/[lang]/api/admin/moderation?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/api/admin/users(?:\\.rsc)(?:/)?$",
+      "dest": "/[lang]/api/admin/users.rsc?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/api/admin/users(?:/)?$",
+      "dest": "/[lang]/api/admin/users?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/api/appeals(?:\\.rsc)(?:/)?$",
+      "dest": "/[lang]/api/appeals.rsc?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/api/appeals(?:/)?$",
+      "dest": "/[lang]/api/appeals?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/api/feed/trending(?:\\.rsc)(?:/)?$",
+      "dest": "/[lang]/api/feed/trending.rsc?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/api/feed/trending(?:/)?$",
+      "dest": "/[lang]/api/feed/trending?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/api/follow/(?<nxtPusername>[^/]+?)(?:\\.rsc)(?:/)?$",
+      "dest": "/[lang]/api/follow/[username].rsc?nxtPlang=$nxtPlang&nxtPusername=$nxtPusername"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/api/follow/(?<nxtPusername>[^/]+?)(?:/)?$",
+      "dest": "/[lang]/api/follow/[username]?nxtPlang=$nxtPlang&nxtPusername=$nxtPusername"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/api/internal/originality\\-check(?:\\.rsc)(?:/)?$",
+      "dest": "/[lang]/api/internal/originality-check.rsc?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/api/internal/originality\\-check(?:/)?$",
+      "dest": "/[lang]/api/internal/originality-check?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/api/kids/history(?:\\.rsc)(?:/)?$",
+      "dest": "/[lang]/api/kids/history.rsc?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/api/kids/history(?:/)?$",
+      "dest": "/[lang]/api/kids/history?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/api/notifications(?:\\.rsc)(?:/)?$",
+      "dest": "/[lang]/api/notifications.rsc?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/api/notifications(?:/)?$",
+      "dest": "/[lang]/api/notifications?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/api/posts(?:\\.rsc)(?:/)?$",
+      "dest": "/[lang]/api/posts.rsc?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/api/posts(?:/)?$",
+      "dest": "/[lang]/api/posts?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/api/posts/(?<nxtPid>[^/]+?)(?:\\.rsc)(?:/)?$",
+      "dest": "/[lang]/api/posts/[id].rsc?nxtPlang=$nxtPlang&nxtPid=$nxtPid"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/api/posts/(?<nxtPid>[^/]+?)(?:/)?$",
+      "dest": "/[lang]/api/posts/[id]?nxtPlang=$nxtPlang&nxtPid=$nxtPid"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/api/posts/(?<nxtPid>[^/]+?)/comments(?:\\.rsc)(?:/)?$",
+      "dest": "/[lang]/api/posts/[id]/comments.rsc?nxtPlang=$nxtPlang&nxtPid=$nxtPid"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/api/posts/(?<nxtPid>[^/]+?)/comments(?:/)?$",
+      "dest": "/[lang]/api/posts/[id]/comments?nxtPlang=$nxtPlang&nxtPid=$nxtPid"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/api/posts/(?<nxtPid>[^/]+?)/like(?:\\.rsc)(?:/)?$",
+      "dest": "/[lang]/api/posts/[id]/like.rsc?nxtPlang=$nxtPlang&nxtPid=$nxtPid"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/api/posts/(?<nxtPid>[^/]+?)/like(?:/)?$",
+      "dest": "/[lang]/api/posts/[id]/like?nxtPlang=$nxtPlang&nxtPid=$nxtPid"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/api/posts/(?<nxtPid>[^/]+?)/save(?:\\.rsc)(?:/)?$",
+      "dest": "/[lang]/api/posts/[id]/save.rsc?nxtPlang=$nxtPlang&nxtPid=$nxtPid"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/api/posts/(?<nxtPid>[^/]+?)/save(?:/)?$",
+      "dest": "/[lang]/api/posts/[id]/save?nxtPlang=$nxtPlang&nxtPid=$nxtPid"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/api/posts/(?<nxtPid>[^/]+?)/views(?:\\.rsc)(?:/)?$",
+      "dest": "/[lang]/api/posts/[id]/views.rsc?nxtPlang=$nxtPlang&nxtPid=$nxtPid"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/api/posts/(?<nxtPid>[^/]+?)/views(?:/)?$",
+      "dest": "/[lang]/api/posts/[id]/views?nxtPlang=$nxtPlang&nxtPid=$nxtPid"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/api/profile(?:\\.rsc)(?:/)?$",
+      "dest": "/[lang]/api/profile.rsc?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/api/profile(?:/)?$",
+      "dest": "/[lang]/api/profile?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/api/profile/avatar(?:\\.rsc)(?:/)?$",
+      "dest": "/[lang]/api/profile/avatar.rsc?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/api/profile/avatar(?:/)?$",
+      "dest": "/[lang]/api/profile/avatar?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/api/reports(?:\\.rsc)(?:/)?$",
+      "dest": "/[lang]/api/reports.rsc?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/api/reports(?:/)?$",
+      "dest": "/[lang]/api/reports?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/api/search(?:\\.rsc)(?:/)?$",
+      "dest": "/[lang]/api/search.rsc?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/api/search(?:/)?$",
+      "dest": "/[lang]/api/search?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/api/upload(?:\\.rsc)(?:/)?$",
+      "dest": "/[lang]/api/upload.rsc?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/api/upload(?:/)?$",
+      "dest": "/[lang]/api/upload?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/auth/callback(?:\\.rsc)(?:/)?$",
+      "dest": "/[lang]/auth/callback.rsc?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/auth/callback(?:/)?$",
+      "dest": "/[lang]/auth/callback?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/auth/signout(?:\\.rsc)(?:/)?$",
+      "dest": "/[lang]/auth/signout.rsc?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/auth/signout(?:/)?$",
+      "dest": "/[lang]/auth/signout?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/dashboard(?:\\.rsc)(?:/)?$",
+      "dest": "/[lang]/dashboard.rsc?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/dashboard(?:/)?$",
+      "dest": "/[lang]/dashboard?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/feed(?:\\.rsc)(?:/)?$",
+      "dest": "/[lang]/feed.rsc?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/feed(?:/)?$",
+      "dest": "/[lang]/feed?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/kids(?:\\.rsc)(?:/)?$",
+      "dest": "/[lang]/kids.rsc?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/kids(?:/)?$",
+      "dest": "/[lang]/kids?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/kids/story/(?<nxtPid>[^/]+?)(?:\\.rsc)(?:/)?$",
+      "dest": "/[lang]/kids/story/[id].rsc?nxtPlang=$nxtPlang&nxtPid=$nxtPid"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/kids/story/(?<nxtPid>[^/]+?)(?:/)?$",
+      "dest": "/[lang]/kids/story/[id]?nxtPlang=$nxtPlang&nxtPid=$nxtPid"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/login(?:\\.rsc)(?:/)?$",
+      "dest": "/[lang]/login.rsc?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/login(?:/)?$",
+      "dest": "/[lang]/login?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/posts/(?<nxtPid>[^/]+?)(?:\\.rsc)(?:/)?$",
+      "dest": "/[lang]/posts/[id].rsc?nxtPlang=$nxtPlang&nxtPid=$nxtPid"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/posts/(?<nxtPid>[^/]+?)(?:/)?$",
+      "dest": "/[lang]/posts/[id]?nxtPlang=$nxtPlang&nxtPid=$nxtPid"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/reset\\-password(?:\\.rsc)(?:/)?$",
+      "dest": "/[lang]/reset-password.rsc?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/reset\\-password(?:/)?$",
+      "dest": "/[lang]/reset-password?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/signup(?:\\.rsc)(?:/)?$",
+      "dest": "/[lang]/signup.rsc?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/signup(?:/)?$",
+      "dest": "/[lang]/signup?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/verify(?:\\.rsc)(?:/)?$",
+      "dest": "/[lang]/verify.rsc?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/verify(?:/)?$",
+      "dest": "/[lang]/verify?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/write(?:\\.rsc)(?:/)?$",
+      "dest": "/[lang]/write.rsc?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/write(?:/)?$",
+      "dest": "/[lang]/write?nxtPlang=$nxtPlang"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/write/(?<nxtPid>[^/]+?)(?:\\.rsc)(?:/)?$",
+      "dest": "/[lang]/write/[id].rsc?nxtPlang=$nxtPlang&nxtPid=$nxtPid"
+    },
+    {
+      "src": "^/(?<nxtPlang>[^/]+?)/write/(?<nxtPid>[^/]+?)(?:/)?$",
+      "dest": "/[lang]/write/[id]?nxtPlang=$nxtPlang&nxtPid=$nxtPid"
+    },
+    {
+      "src": "^/_next/data/0sfcxJ1wXkknBZOiL8zSY/(.*).json",
+      "headers": {
+        "x-nextjs-matched-path": "/$1"
+      },
+      "continue": true,
+      "override": true
+    },
+    {
+      "src": "^/_next/data/0sfcxJ1wXkknBZOiL8zSY/(.*).json",
+      "dest": "__next_data_catchall"
+    },
+    {
+      "handle": "hit"
+    },
+    {
+      "src": "/_next/static/(?:[^/]+/pages|pages|chunks|runtime|css|image|media|0sfcxJ1wXkknBZOiL8zSY)/.+",
+      "headers": {
+        "cache-control": "public,max-age=31536000,immutable"
+      },
+      "continue": true,
+      "important": true
+    },
+    {
+      "src": "/index(?:/)?",
+      "headers": {
+        "x-matched-path": "/"
+      },
+      "continue": true,
+      "important": true
+    },
+    {
+      "src": "/((?!index$).*?)(?:/)?",
+      "headers": {
+        "x-matched-path": "/$1"
+      },
+      "continue": true,
+      "important": true
+    },
+    {
+      "handle": "error"
+    },
+    {
+      "src": "/.*",
+      "dest": "/404",
+      "status": 404
+    },
+    {
+      "src": "/.*",
+      "dest": "/500",
+      "status": 500
+    }
+  ],
+  "images": {
+    "domains": [],
+    "sizes": [
+      640,
+      750,
+      828,
+      1080,
+      1200,
+      1920,
+      2048,
+      3840,
+      16,
+      32,
+      48,
+      64,
+      96,
+      128,
+      256,
+      384
+    ],
+    "remotePatterns": [],
+    "minimumCacheTTL": 60,
+    "formats": [
+      "image/webp"
+    ],
+    "dangerouslyAllowSVG": false,
+    "contentSecurityPolicy": "script-src 'none'; frame-src 'none'; sandbox;",
+    "contentDispositionType": "attachment"
+  },
+  "overrides": {
+    "404.html": {
+      "path": "404",
+      "contentType": "text/html; charset=utf-8"
+    },
+    "500.html": {
+      "path": "500",
+      "contentType": "text/html; charset=utf-8"
+    },
+    "_app.rsc.json": {
+      "path": "_app.rsc",
+      "contentType": "application/json"
+    },
+    "_error.rsc.json": {
+      "path": "_error.rsc",
+      "contentType": "application/json"
+    },
+    "_document.rsc.json": {
+      "path": "_document.rsc",
+      "contentType": "application/json"
+    },
+    "404.rsc.json": {
+      "path": "404.rsc",
+      "contentType": "application/json"
+    },
+    "__next_data_catchall.json": {
+      "path": "__next_data_catchall",
+      "contentType": "application/json"
+    },
+    "_next/static/not-found.txt": {
+      "contentType": "text/plain"
+    }
+  },
+  "framework": {
+    "version": "15.5.2"
+  },
+  "crons": []
+}

@@ -5,14 +5,15 @@ import { isLocale } from "@/lib/i18n/config";
 import { EditorForm } from "@/components/EditorForm";
 
 /** New story: the editor creates a draft via POST /api/posts on mount. */
-export default async function WritePage({ params }: { params: { lang: string } }) {
+export default async function WritePage({ params: _params }: { params: Promise<{ lang: string }> }) {
+  const params = await _params;
   if (!isLocale(params.lang)) notFound();
   const lang = params.lang;
   const dict = await getDictionary(lang);
 
   // Adult accounts only — explicit check (middleware redirects children too,
   // and RLS denies child writes; this keeps the page contract obvious).
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();

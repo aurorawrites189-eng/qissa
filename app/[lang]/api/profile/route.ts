@@ -2,6 +2,8 @@ import { createClient } from "@/lib/supabase/server";
 import { profileUpdateSchema } from "@/lib/validation";
 import { json, clientIp, rateLimitOr429, requireUser } from "@/lib/api/respond";
 
+export const runtime = "edge";
+
 /**
  * PATCH /[lang]/api/profile — update your own display name, bio and
  * preferred language. Any signed-in user (children included — profile
@@ -12,7 +14,7 @@ import { json, clientIp, rateLimitOr429, requireUser } from "@/lib/api/respond";
  * (username, age_class, strikes, suspension, is_admin, …).
  */
 export async function PATCH(request: Request) {
-  const limited = rateLimitOr429(`profile:update:${clientIp()}`, 20, 60_000);
+  const limited = rateLimitOr429(`profile:update:${await clientIp()}`, 20, 60_000);
   if (limited) return limited;
 
   const auth = await requireUser();
@@ -32,7 +34,7 @@ export async function PATCH(request: Request) {
     return json({ error: "nothing_to_update" }, 400);
   }
 
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data, error } = await supabase
     .from("profiles")
     .update(parsed.data)

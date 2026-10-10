@@ -9,11 +9,12 @@ import type { Locale } from "@/lib/site-config";
 
 export default async function AdminLayout({
   children,
-  params,
+  params: _params,
 }: {
   children: ReactNode;
-  params: { lang: string };
+  params: Promise<{ lang: string }>;
 }) {
+  const params = await _params;
   const lang = params.lang as Locale;
   await requireAdminPage(lang);
   const dict = await getDictionary(lang);

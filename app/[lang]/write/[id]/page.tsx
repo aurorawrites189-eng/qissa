@@ -6,15 +6,16 @@ import { EditorForm, type EditorInitialPost } from "@/components/EditorForm";
 
 /** Edit your own draft. Anything else (other authors, non-drafts) → 404. */
 export default async function EditDraftPage({
-  params,
+  params: _params,
 }: {
-  params: { lang: string; id: string };
+  params: Promise<{ lang: string; id: string }>;
 }) {
+  const params = await _params;
   if (!isLocale(params.lang)) notFound();
   const lang = params.lang;
   const dict = await getDictionary(lang);
 
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();

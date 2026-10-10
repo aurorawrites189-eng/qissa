@@ -1,6 +1,8 @@
 import type { MetadataRoute } from "next";
 import { SITE, type Locale } from "@/lib/site-config";
 
+export const runtime = "edge";
+
 /**
  * Static sitemap for Qissa.
  *
@@ -40,7 +42,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // To include published posts, make this function async and insert:
   //
   //   import { createClient } from "@/lib/supabase/server";
-  //   const supabase = createClient();
+  //   const supabase = await createClient();
   //   const { data: posts } = await supabase
   //     .from("posts")
   //     .select("id, updated_at")

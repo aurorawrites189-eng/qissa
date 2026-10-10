@@ -1,0 +1,1 @@
+var e={},d=(l,n,r)=>(e.__chunk_44391=(o,t,a)=>{"use strict";a.d(t,{C:()=>s});let s={name:"Qissa",nameUrdu:"\u0642\u0635\u06C1",tagline:"Write. Read. Belong.",taglineUrdu:"\u0644\u06A9\u06BE\u06CC\u06BA\u06D4 \u067E\u0691\u06BE\u06CC\u06BA\u06D4 \u062C\u0691\u06CC\u06BA\u06D4",locales:["en","ur"],defaultLocale:"en",url:"https://qissa.pages.dev"}},e);export{d as __getNamedExports};

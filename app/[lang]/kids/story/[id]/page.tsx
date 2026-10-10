@@ -6,15 +6,16 @@ import { KidsStoryReader } from "@/components/KidsStoryReader";
 
 /** Large-type kids' story reader. Only kids-approved published stories. */
 export default async function KidsStoryPage({
-  params,
+  params: _params,
 }: {
-  params: { lang: string; id: string };
+  params: Promise<{ lang: string; id: string }>;
 }) {
+  const params = await _params;
   if (!isLocale(params.lang)) notFound();
   const lang = params.lang;
   const dict = await getDictionary(lang);
 
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data: post } = await supabase
     .from("posts")
     .select("id, title, content, language, category, author_id")
