@@ -19,6 +19,10 @@ export const metadata: Metadata = {
     template: `%s · ${SITE.name}`,
   },
   description: SITE.tagline,
+  // Google Search Console ownership verification (meta tag supplied by the site owner).
+  verification: {
+    google: "XLbYSXxKfMA8DeZtFq3An0LvrgGnO-oTDT7Gvu9HPKE",
+  },
 };
 
 // Applies the saved (or system-preferred) theme before first paint so the
