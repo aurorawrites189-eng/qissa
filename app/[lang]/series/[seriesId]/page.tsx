@@ -60,6 +60,18 @@ export default async function SeriesDetailPage({
   const isAuthor = !!user && !!series.author_id && user.id === series.author_id;
   const t = dict.series as Record<string, string>;
 
+  // Author's own pending episodes (awaiting admin approval).
+  let pendingEps: EpisodeRow[] = [];
+  if (isAuthor) {
+    const { data: pending } = await supabase
+      .from("posts")
+      .select("id, title, episode_number, published_at")
+      .eq("series_id", series.id)
+      .eq("status", "pending_review")
+      .order("episode_number", { ascending: true });
+    pendingEps = (pending ?? []) as EpisodeRow[];
+  }
+
   return (
     <div className="mx-auto max-w-3xl px-4 py-10">
       <Link
@@ -102,6 +114,20 @@ export default async function SeriesDetailPage({
       <h2 className="mt-10 text-xl font-bold">
         {t.episodes} ({epList.length})
       </h2>
+      {pendingEps.length > 0 && (
+        <div className="mt-4 rounded-2xl border border-amber-300 bg-amber-50 p-4 dark:border-amber-800 dark:bg-amber-950/40">
+          <p className="text-sm font-semibold text-amber-800 dark:text-amber-300">
+            ⏳ {t.pendingApproval} ({pendingEps.length})
+          </p>
+          <ul className="mt-2 space-y-1">
+            {pendingEps.map((ep) => (
+              <li key={ep.id} className="text-sm text-neutral-600 dark:text-neutral-300">
+                {t.episode} {ep.episode_number ?? ""}: {ep.title}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
       {epList.length === 0 ? (
         <p className="mt-3 text-neutral-500">{t.emptyTitle}</p>
       ) : (
