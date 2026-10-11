@@ -325,6 +325,7 @@
     "backToSeries": "All episodes",
     "emptyTitle": "No serials yet",
     "emptyBody": "Be the first to start an episode-wise novel!",
-    "loginToCreate": "Log in to start your own series."
+    "loginToCreate": "Log in to start your own series.",
+    "pendingApproval": "Waiting for admin approval"
   }
 }
