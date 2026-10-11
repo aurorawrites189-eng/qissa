@@ -1,1 +1,330 @@
-{"auth":{"backToLogin":"Back to log in","birthYear":"Birth year","confirmPassword":"Confirm password","creatingAccount":"Creating account…","email":"Email","forgotPassword":"Forgot password?","haveAccount":"Already have an account?","loggingIn":"Logging in…","loginButton":"Log in","loginSubtitle":"Log in to continue your story.","loginTitle":"Welcome back","newPassword":"New password","noAccount":"Don't have an account?","password":"Password","passwordUpdated":"Your password has been updated.","preferredLanguage":"Preferred language","resendButton":"Resend verification email","resendDone":"If an account exists for that email, a new link is on its way.","resetBody":"Enter your email and we'll send you a password reset link.","resetButton":"Send reset link","resetDone":"If an account exists for that email, a reset link is on its way.","resetTitle":"Reset your password","setNewPasswordButton":"Update password","setNewPasswordTitle":"Choose a new password","signupButton":"Create account","signupSubtitle":"Join a community of storytellers.","signupTitle":"Create your account","username":"Username","verifyBody":"We've sent a verification link to your email address. Click it to activate your account, then log in.","verifyTitle":"Check your email"},"common":{"back":"Back","cancel":"Cancel","close":"Close","delete":"Delete","edit":"Edit","loading":"Loading…","next":"Next","of":"of","or":"or","page":"Page","previous":"Previous","readMore":"Read more","retry":"Try again","save":"Save","search":"Search"},"dashboard":{"account":"Account","active":"Active","avatarHint":"JPG, PNG or WebP — up to 2MB.","avatarTooBig":"Avatar must be 2MB or smaller.","changeAvatar":"Change photo","date":"Date","drafts":"Drafts","emptyDrafts":"No drafts yet.","emptyPending":"Nothing waiting for review.","emptyPublished":"No published stories yet.","emptySaved":"No saved stories yet.","emptyStories":"You haven't written anything yet.","emptyStoriesBody":"Start your first story — your words matter.","followers":"Followers","following":"Following","markAllRead":"Mark all as read","memberSince":"Member since","myDrafts":"My drafts","myPublished":"Published stories","mySaved":"Saved stories","myStories":"My stories","newStory":"New story","noFollowers":"No followers yet.","noFollowing":"You're not following anyone yet.","noNotifications":"No notifications yet.","noViolations":"No violations. Keep up the good work!","notifications":"Notifications","pendingReview":"Pending review","profile":"Profile","published":"Published","saved":"Saved","status":"Status","strikes":"Strikes","suspended":"Suspended","title":"Dashboard","type":"Type","viewStory":"View","violations":"Violations & strikes","withheld":"Withheld"},"empty":{"body":"Check back soon for new stories.","title":"Nothing here yet"},"feed":{"allCategories":"All categories","allLanguages":"All languages","clearFilters":"Clear filters","noResults":"No stories match your search.","searchPlaceholder":"Search titles and stories…","subtitle":"Fresh stories from the NazmHub community.","title":"Explore stories"},"footer":{"rights":"All rights reserved.","tagline":"Write. Read. Belong.","about":"About","privacy":"Privacy","contact":"Contact"},"hero":{"ctaRead":"Start reading","ctaWrite":"Start writing","kidsNote":"Looking for young readers? Visit the Kids' Corner — every story there is reviewed for children.","subtitle":"NazmHub is a community for writers and readers in Urdu and English. Publish your stories, discover new voices, and grow together.","title":"Every story deserves a home."},"kids":{"allStories":"All stories","continueReading":"Pick up where you left off","emptyBody":"New kids' stories are on their way. Check back soon!","emptyTitle":"No stories yet","fontSize":"Text size","large":"Large","medium":"Medium","readStory":"Read story","reportDetails":"Tell us more (optional)","reportLogin":"Log in to report a story.","reportReason":"What's wrong?","reportReasonInappropriate":"Not appropriate for kids","reportReasonOther":"Something else","reportReasonScary":"Scary or upsetting","reportSent":"Thanks! A moderator will check this story.","reportStory":"Report this story","safeNotice":"Every story here is reviewed by our team before children can read it.","searchPlaceholder":"Search stories…","small":"Small","subtitle":"Stories picked and reviewed for young readers.","title":"Kids' Corner"},"moderation":{"appeal":"Appeal","appealTitle":"Appeal this decision","details":"Details (optional)","reason":"Reason","report":"Report","reportDone":"Thanks — our moderators will take a look.","reportTitle":"Report this story","submitAppeal":"Submit appeal","submitReport":"Submit report","yourMessage":"Your message"},"nav":{"dashboard":"Dashboard","explore":"Explore","home":"Home","kids":"Kids","login":"Log in","profile":"Profile","settings":"Settings","signout":"Sign out","signup":"Sign up","write":"Write"},"pagination":{"next":"Next","of":"of","page":"Page","previous":"Previous"},"posts":{"by":"By","words":"words"},"settings":{"bio":"Bio","displayName":"Display name","language":"Language","profile":"Profile","save":"Save changes","saved":"Your changes have been saved.","title":"Settings"},"validation":{"birthYearInvalid":"Enter a valid birth year","genericError":"Something went wrong. Please try again.","invalidEmail":"Enter a valid email address","passwordShort":"Password must be at least 8 characters","required":"This field is required","tooManyAttempts":"Too many attempts. Please wait a moment and try again.","usernameInvalid":"Usernames can only contain letters, numbers and underscores","usernameTaken":"This username is already taken"},"write":{"altText":"Image description (alt text)","altTextHint":"Describe the image for readers who can't see it.","autosaved":"All changes saved","backToEditor":"Back to editor","category":"Category","content":"Story","coverImage":"Cover image","creating":"Creating your draft…","deleteConfirm":"Delete this draft? This cannot be undone.","deleteDraft":"Delete draft","imageTooBig":"Image must be 5MB or smaller.","kidsCategoryRequired":"Choose a kids' category to submit as a kids' story.","kidsStoryHint":"Kids' stories need a kids' category and are reviewed before children can read them.","language":"Language","notAnImage":"Please choose an image file.","preview":"Preview","publish":"Publish","publishError":"Could not publish. Please check the form and try again.","removeImage":"Remove image","saveDraft":"Save draft","saving":"Saving…","storyTitle":"Title","submitAsKids":"Submit as kids' story","submitReview":"Submit for review","tags":"Tags","tagsHint":"Separate tags with commas.","title":"Write a story","untitled":"Untitled","uploadCover":"Upload cover","uploading":"Uploading…","visibility":"Visibility","visibilityPublic":"Public","visibilityUnlisted":"Unlisted — only people with the link"},"about":{"title":"About NazmHub","metaTitle":"About","intro":"NazmHub (نظم) is a home for writers and readers in Urdu and English. Publish your stories, articles, essays and poetry — or just come to read.","sections":[{"heading":"Two languages, one home","body":"Write and read in Urdu and English, with full right-to-left support for Urdu. Switch languages anytime — your words stay yours."},{"heading":"What you can publish","body":"Stories, articles, essays, poetry, and everyday thoughts. From a two-line nazm to a long afsana, everything has a place here."},{"heading":"Kids' Corner","body":"A special shelf of stories reviewed by our team before young readers can see them. Safe, simple, and full of wonder."},{"heading":"A respectful community","body":"We protect original work and keep the space kind: clear rules, human-reviewed moderation, and a fair appeals process."}]},"privacy":{"title":"Privacy Policy","metaTitle":"Privacy Policy","updated":"Last updated: October 2026","intro":"NazmHub collects as little as possible to run the site — and never sells your data.","sections":[{"heading":"What we collect","body":"Account details you give us (email, username, birth year for age-appropriate access). Content you publish (stories, comments, profile). Technical basics stored in your browser (theme, language, login session) via our auth provider, Supabase."},{"heading":"How we use it","body":"To run your account, show your work, keep the community safe through moderation, and improve the site. We do not sell your personal information to anyone."},{"heading":"Children","body":"Readers under 16 get a read-only Kids' Corner with reviewed stories. We ask for a birth year at signup so younger accounts get age-appropriate access."},{"heading":"Cookies","body":"We use cookies and browser storage for login, language, and theme preferences. If advertising is enabled in the future, third-party vendors including Google may use cookies to serve ads; you can opt out via Google's Ad Settings."},{"heading":"Your choices","body":"Edit your profile anytime in Settings. To delete your account or ask about your data, reach us through the Contact page."}]},"contact":{"title":"Contact Us","metaTitle":"Contact","intro":"The fastest way to reach us depends on what you need:","items":[{"heading":"Report a story or comment","body":"Every story page has a Report button. Our moderators review every report."},{"heading":"Appeal a moderation decision","body":"If your work was removed or limited, you can appeal from your dashboard. A human reviews every appeal."},{"heading":"Account and privacy questions","body":"Manage your profile in Settings. For anything else, email us — our email address is coming soon."}],"note":"We read everything, but we're a small team — please allow a few days for a reply."}}
+{
+  "auth": {
+    "backToLogin": "Back to log in",
+    "birthYear": "Birth year",
+    "confirmPassword": "Confirm password",
+    "creatingAccount": "Creating account…",
+    "email": "Email",
+    "forgotPassword": "Forgot password?",
+    "haveAccount": "Already have an account?",
+    "loggingIn": "Logging in…",
+    "loginButton": "Log in",
+    "loginSubtitle": "Log in to continue your story.",
+    "loginTitle": "Welcome back",
+    "newPassword": "New password",
+    "noAccount": "Don't have an account?",
+    "password": "Password",
+    "passwordUpdated": "Your password has been updated.",
+    "preferredLanguage": "Preferred language",
+    "resendButton": "Resend verification email",
+    "resendDone": "If an account exists for that email, a new link is on its way.",
+    "resetBody": "Enter your email and we'll send you a password reset link.",
+    "resetButton": "Send reset link",
+    "resetDone": "If an account exists for that email, a reset link is on its way.",
+    "resetTitle": "Reset your password",
+    "setNewPasswordButton": "Update password",
+    "setNewPasswordTitle": "Choose a new password",
+    "signupButton": "Create account",
+    "signupSubtitle": "Join a community of storytellers.",
+    "signupTitle": "Create your account",
+    "username": "Username",
+    "verifyBody": "We've sent a verification link to your email address. Click it to activate your account, then log in.",
+    "verifyTitle": "Check your email"
+  },
+  "common": {
+    "back": "Back",
+    "cancel": "Cancel",
+    "close": "Close",
+    "delete": "Delete",
+    "edit": "Edit",
+    "loading": "Loading…",
+    "next": "Next",
+    "of": "of",
+    "or": "or",
+    "page": "Page",
+    "previous": "Previous",
+    "readMore": "Read more",
+    "retry": "Try again",
+    "save": "Save",
+    "search": "Search"
+  },
+  "dashboard": {
+    "account": "Account",
+    "active": "Active",
+    "avatarHint": "JPG, PNG or WebP — up to 2MB.",
+    "avatarTooBig": "Avatar must be 2MB or smaller.",
+    "changeAvatar": "Change photo",
+    "date": "Date",
+    "drafts": "Drafts",
+    "emptyDrafts": "No drafts yet.",
+    "emptyPending": "Nothing waiting for review.",
+    "emptyPublished": "No published stories yet.",
+    "emptySaved": "No saved stories yet.",
+    "emptyStories": "You haven't written anything yet.",
+    "emptyStoriesBody": "Start your first story — your words matter.",
+    "followers": "Followers",
+    "following": "Following",
+    "markAllRead": "Mark all as read",
+    "memberSince": "Member since",
+    "myDrafts": "My drafts",
+    "myPublished": "Published stories",
+    "mySaved": "Saved stories",
+    "myStories": "My stories",
+    "newStory": "New story",
+    "noFollowers": "No followers yet.",
+    "noFollowing": "You're not following anyone yet.",
+    "noNotifications": "No notifications yet.",
+    "noViolations": "No violations. Keep up the good work!",
+    "notifications": "Notifications",
+    "pendingReview": "Pending review",
+    "profile": "Profile",
+    "published": "Published",
+    "saved": "Saved",
+    "status": "Status",
+    "strikes": "Strikes",
+    "suspended": "Suspended",
+    "title": "Dashboard",
+    "type": "Type",
+    "viewStory": "View",
+    "violations": "Violations & strikes",
+    "withheld": "Withheld"
+  },
+  "empty": {
+    "body": "Check back soon for new stories.",
+    "title": "Nothing here yet"
+  },
+  "feed": {
+    "allCategories": "All categories",
+    "allLanguages": "All languages",
+    "clearFilters": "Clear filters",
+    "noResults": "No stories match your search.",
+    "searchPlaceholder": "Search titles and stories…",
+    "subtitle": "Fresh stories from the NazmHub community.",
+    "title": "Explore stories"
+  },
+  "footer": {
+    "rights": "All rights reserved.",
+    "tagline": "Write. Read. Belong.",
+    "about": "About",
+    "privacy": "Privacy",
+    "contact": "Contact"
+  },
+  "hero": {
+    "ctaRead": "Start reading",
+    "ctaWrite": "Start writing",
+    "kidsNote": "Looking for young readers? Visit the Kids' Corner — every story there is reviewed for children.",
+    "subtitle": "NazmHub is a community for writers and readers in Urdu and English. Publish your stories, discover new voices, and grow together.",
+    "title": "Every story deserves a home."
+  },
+  "kids": {
+    "allStories": "All stories",
+    "continueReading": "Pick up where you left off",
+    "emptyBody": "New kids' stories are on their way. Check back soon!",
+    "emptyTitle": "No stories yet",
+    "fontSize": "Text size",
+    "large": "Large",
+    "medium": "Medium",
+    "readStory": "Read story",
+    "reportDetails": "Tell us more (optional)",
+    "reportLogin": "Log in to report a story.",
+    "reportReason": "What's wrong?",
+    "reportReasonInappropriate": "Not appropriate for kids",
+    "reportReasonOther": "Something else",
+    "reportReasonScary": "Scary or upsetting",
+    "reportSent": "Thanks! A moderator will check this story.",
+    "reportStory": "Report this story",
+    "safeNotice": "Every story here is reviewed by our team before children can read it.",
+    "searchPlaceholder": "Search stories…",
+    "small": "Small",
+    "subtitle": "Stories picked and reviewed for young readers.",
+    "title": "Kids' Corner"
+  },
+  "moderation": {
+    "appeal": "Appeal",
+    "appealTitle": "Appeal this decision",
+    "details": "Details (optional)",
+    "reason": "Reason",
+    "report": "Report",
+    "reportDone": "Thanks — our moderators will take a look.",
+    "reportTitle": "Report this story",
+    "submitAppeal": "Submit appeal",
+    "submitReport": "Submit report",
+    "yourMessage": "Your message"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "explore": "Explore",
+    "home": "Home",
+    "kids": "Kids",
+    "login": "Log in",
+    "profile": "Profile",
+    "settings": "Settings",
+    "signout": "Sign out",
+    "signup": "Sign up",
+    "write": "Write",
+    "series": "Serials"
+  },
+  "pagination": {
+    "next": "Next",
+    "of": "of",
+    "page": "Page",
+    "previous": "Previous"
+  },
+  "posts": {
+    "by": "By",
+    "words": "words"
+  },
+  "settings": {
+    "bio": "Bio",
+    "displayName": "Display name",
+    "language": "Language",
+    "profile": "Profile",
+    "save": "Save changes",
+    "saved": "Your changes have been saved.",
+    "title": "Settings"
+  },
+  "validation": {
+    "birthYearInvalid": "Enter a valid birth year",
+    "genericError": "Something went wrong. Please try again.",
+    "invalidEmail": "Enter a valid email address",
+    "passwordShort": "Password must be at least 8 characters",
+    "required": "This field is required",
+    "tooManyAttempts": "Too many attempts. Please wait a moment and try again.",
+    "usernameInvalid": "Usernames can only contain letters, numbers and underscores",
+    "usernameTaken": "This username is already taken"
+  },
+  "write": {
+    "altText": "Image description (alt text)",
+    "altTextHint": "Describe the image for readers who can't see it.",
+    "autosaved": "All changes saved",
+    "backToEditor": "Back to editor",
+    "category": "Category",
+    "content": "Story",
+    "coverImage": "Cover image",
+    "creating": "Creating your draft…",
+    "deleteConfirm": "Delete this draft? This cannot be undone.",
+    "deleteDraft": "Delete draft",
+    "imageTooBig": "Image must be 5MB or smaller.",
+    "kidsCategoryRequired": "Choose a kids' category to submit as a kids' story.",
+    "kidsStoryHint": "Kids' stories need a kids' category and are reviewed before children can read them.",
+    "language": "Language",
+    "notAnImage": "Please choose an image file.",
+    "preview": "Preview",
+    "publish": "Publish",
+    "publishError": "Could not publish. Please check the form and try again.",
+    "removeImage": "Remove image",
+    "saveDraft": "Save draft",
+    "saving": "Saving…",
+    "storyTitle": "Title",
+    "submitAsKids": "Submit as kids' story",
+    "submitReview": "Submit for review",
+    "tags": "Tags",
+    "tagsHint": "Separate tags with commas.",
+    "title": "Write a story",
+    "untitled": "Untitled",
+    "uploadCover": "Upload cover",
+    "uploading": "Uploading…",
+    "visibility": "Visibility",
+    "visibilityPublic": "Public",
+    "visibilityUnlisted": "Unlisted — only people with the link"
+  },
+  "about": {
+    "title": "About NazmHub",
+    "metaTitle": "About",
+    "intro": "NazmHub (نظم) is a home for writers and readers in Urdu and English. Publish your stories, articles, essays and poetry — or just come to read.",
+    "sections": [
+      {
+        "heading": "Two languages, one home",
+        "body": "Write and read in Urdu and English, with full right-to-left support for Urdu. Switch languages anytime — your words stay yours."
+      },
+      {
+        "heading": "What you can publish",
+        "body": "Stories, articles, essays, poetry, and everyday thoughts. From a two-line nazm to a long afsana, everything has a place here."
+      },
+      {
+        "heading": "Kids' Corner",
+        "body": "A special shelf of stories reviewed by our team before young readers can see them. Safe, simple, and full of wonder."
+      },
+      {
+        "heading": "A respectful community",
+        "body": "We protect original work and keep the space kind: clear rules, human-reviewed moderation, and a fair appeals process."
+      }
+    ]
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "metaTitle": "Privacy Policy",
+    "updated": "Last updated: October 2026",
+    "intro": "NazmHub collects as little as possible to run the site — and never sells your data.",
+    "sections": [
+      {
+        "heading": "What we collect",
+        "body": "Account details you give us (email, username, birth year for age-appropriate access). Content you publish (stories, comments, profile). Technical basics stored in your browser (theme, language, login session) via our auth provider, Supabase."
+      },
+      {
+        "heading": "How we use it",
+        "body": "To run your account, show your work, keep the community safe through moderation, and improve the site. We do not sell your personal information to anyone."
+      },
+      {
+        "heading": "Children",
+        "body": "Readers under 16 get a read-only Kids' Corner with reviewed stories. We ask for a birth year at signup so younger accounts get age-appropriate access."
+      },
+      {
+        "heading": "Cookies",
+        "body": "We use cookies and browser storage for login, language, and theme preferences. If advertising is enabled in the future, third-party vendors including Google may use cookies to serve ads; you can opt out via Google's Ad Settings."
+      },
+      {
+        "heading": "Your choices",
+        "body": "Edit your profile anytime in Settings. To delete your account or ask about your data, reach us through the Contact page."
+      }
+    ]
+  },
+  "contact": {
+    "title": "Contact Us",
+    "metaTitle": "Contact",
+    "intro": "The fastest way to reach us depends on what you need:",
+    "items": [
+      {
+        "heading": "Report a story or comment",
+        "body": "Every story page has a Report button. Our moderators review every report."
+      },
+      {
+        "heading": "Appeal a moderation decision",
+        "body": "If your work was removed or limited, you can appeal from your dashboard. A human reviews every appeal."
+      },
+      {
+        "heading": "Account and privacy questions",
+        "body": "Manage your profile in Settings. For anything else, email us — our email address is coming soon."
+      }
+    ],
+    "note": "We read everything, but we're a small team — please allow a few days for a reply."
+  },
+  "series": {
+    "title": "Serials",
+    "subtitle": "Episode-wise novels with cliffhangers — a new twist in every episode.",
+    "newSeries": "Start Your Own Series",
+    "newSeriesTitle": "Start a New Series",
+    "seriesTitle": "Series title",
+    "seriesTitlePh": "e.g. The Secret of Class 10-B",
+    "description": "Description",
+    "descriptionPh": "What is your series about? (2-3 lines)",
+    "genre": "Genre",
+    "language": "Language",
+    "create": "Create Series",
+    "episodes": "Episodes",
+    "episode": "Episode",
+    "ongoing": "Ongoing",
+    "completed": "Completed",
+    "addEpisode": "Add Episode",
+    "newEpisodeTitle": "New Episode",
+    "episodeTitle": "Episode title",
+    "content": "Story content",
+    "publish": "Publish Episode",
+    "prevEpisode": "Previous episode",
+    "nextEpisode": "Next episode",
+    "backToSeries": "All episodes",
+    "emptyTitle": "No serials yet",
+    "emptyBody": "Be the first to start an episode-wise novel!",
+    "loginToCreate": "Log in to start your own series."
+  }
+}
