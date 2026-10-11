@@ -136,4 +136,4 @@ middleware.ts             # session refresh + child age-gating with an
 
 ## 🌐 Live Site
 
-**NazmHub** is live at https://qissa-37g.pages.dev — a bilingual (Urdu + English) writing and storytelling community.
+**NazmHub** is live at https://nazmhub.pages.dev — a bilingual (Urdu + English) writing and storytelling community.
