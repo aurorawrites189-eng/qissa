@@ -4,7 +4,7 @@ import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { isLocale } from "@/lib/i18n/config";
 import { Button } from "@/components/ui/Button";
 
-async function createEpisode(seriesId: string, formData: FormData) {
+async function createEpisode(seriesId: string, lang: string, formData: FormData) {
   "use server";
   const supabase = await createClient();
   const {
@@ -43,15 +43,15 @@ async function createEpisode(seriesId: string, formData: FormData) {
     language: (s as { language: string }).language ?? "ur",
     category: "serial",
     tags: ["serial"],
-    status: "published",
+    // Episodes need admin approval before going live (aurora's rule).
+    status: "pending_review",
     visibility: "public",
-    moderation_status: "approved",
+    moderation_status: "unreviewed",
     is_kids_approved: false,
-    published_at: new Date().toISOString(),
     series_id: seriesId,
     episode_number: nextNum,
   });
-  if (!error) redirect(`/ur/series/${seriesId}/${nextNum}`);
+  if (!error) redirect(`/${lang}/series/${seriesId}`);
 }
 
 /**
@@ -81,7 +81,7 @@ export default async function NewEpisodePage({
   if (!s || (s as { author_id: string | null }).author_id !== user.id) notFound();
 
   const t = dict.series as Record<string, string>;
-  const create = createEpisode.bind(null, params.seriesId);
+  const create = createEpisode.bind(null, params.seriesId, lang);
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-10">
