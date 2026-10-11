@@ -27,6 +27,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { path: "", changeFrequency: "daily", priority: 1 },
     { path: "/feed", changeFrequency: "daily", priority: 0.9 },
     { path: "/kids", changeFrequency: "daily", priority: 0.9 },
+    { path: "/series", changeFrequency: "daily", priority: 0.9 },
     { path: "/about", changeFrequency: "monthly", priority: 0.5 },
     { path: "/privacy", changeFrequency: "monthly", priority: 0.5 },
     { path: "/contact", changeFrequency: "monthly", priority: 0.5 },
@@ -80,6 +81,42 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   } catch {
     // If the DB is unreachable, still serve the static routes.
+  }
+
+  // ---- Serial series + episode URLs ----
+  try {
+    const supabase = await createClient();
+    const { data: allSeries } = await supabase
+      .from("series")
+      .select("id, language, created_at")
+      .limit(500);
+    for (const s of allSeries ?? []) {
+      const lang = (s.language === "ur" ? "ur" : "en") as Locale;
+      entries.push({
+        url: `${base}/${lang}/series/${s.id}`,
+        lastModified: new Date(s.created_at ?? Date.now()),
+        changeFrequency: "weekly",
+        priority: 0.8,
+      });
+      const { data: eps } = await supabase
+        .from("posts")
+        .select("episode_number, updated_at, published_at")
+        .eq("series_id", s.id)
+        .eq("status", "published")
+        .order("episode_number", { ascending: true })
+        .limit(100);
+      for (const ep of eps ?? []) {
+        if (!ep.episode_number) continue;
+        entries.push({
+          url: `${base}/${lang}/series/${s.id}/${ep.episode_number}`,
+          lastModified: new Date(ep.updated_at ?? ep.published_at ?? Date.now()),
+          changeFrequency: "weekly",
+          priority: 0.7,
+        });
+      }
+    }
+  } catch {
+    // Series table may not exist yet (pre-migration) — skip quietly.
   }
 
   return entries;
