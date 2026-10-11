@@ -68,6 +68,12 @@ export function Header({ locale, dict }: { locale: Locale; dict: Dictionary }) {
           >
             {dict.nav.kids}
           </Link>
+          <Link
+            href={`/${locale}/series`}
+            className="rounded-lg px-3 py-2 text-neutral-700 hover:bg-neutral-100 dark:text-neutral-200 dark:hover:bg-neutral-800"
+          >
+            {dict.nav.series}
+          </Link>
         </div>
 
         <div className="ms-auto flex items-center gap-2">
