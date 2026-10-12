@@ -33,8 +33,10 @@ export async function GET(request: NextRequest) {
         },
       }
     );
-    const { error } = await supabase.auth.exchangeCodeForSession(code);
-    if (!error) return response;
+    if (code) {
+      const { error } = await supabase.auth.exchangeCodeForSession(code);
+      if (!error) return response;
+    }
   }
 
   return NextResponse.redirect(new URL(`/${SITE.defaultLocale}/login`, url.origin));
