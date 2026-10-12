@@ -188,7 +188,7 @@ export async function requestPasswordResetAction(formData: FormData): Promise<Ac
   await supabase.auth.resetPasswordForEmail(email.trim(), {
     ...(base
       ? {
-          redirectTo: `${base}/${lang}/auth/callback?next=/${lang}/auth/reset-password`,
+          redirectTo: `${base}/${lang}/auth/callback?next=/${lang}/reset-password`,
         }
       : {}),
   });
