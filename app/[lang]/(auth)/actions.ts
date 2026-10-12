@@ -172,6 +172,17 @@ export async function resendVerificationAction(formData: FormData): Promise<Acti
 
 /** Send a password-reset link. Never reveals if the email exists. */
 export async function requestPasswordResetAction(formData: FormData): Promise<ActionResult> {
+  // The whole body is wrapped: on Cloudflare's edge worker an exception in
+  // ANY setup step used to surface as a generic "Something went wrong".
+  // We now always return a readable message instead.
+  try {
+    return await requestPasswordResetInner(formData);
+  } catch (e) {
+    return { error: `Reset failed: ${e instanceof Error ? e.message : String(e)}` };
+  }
+}
+
+async function requestPasswordResetInner(formData: FormData): Promise<ActionResult> {
   const lang = getLang(formData);
   const dict = await getDictionary(lang);
 
@@ -184,27 +195,33 @@ export async function requestPasswordResetAction(formData: FormData): Promise<Ac
   }
 
   const base = siteUrl();
-  try {
-    const supabase = await createClient();
-    const { error: resetError } = await supabase.auth.resetPasswordForEmail(email.trim(), {
-      ...(base
-        ? {
-            redirectTo: `${base}/${lang}/auth/callback?next=/${lang}/reset-password`,
-          }
-        : {}),
-    });
-    // Surface real send failures (rate limits, bad redirect) instead of a
-    // silent "success". Unknown emails still return no error (no enumeration).
-    if (resetError) return { error: resetError.message };
-  } catch (e) {
-    // TEMPORARY diagnostic: surface the real throw so we can fix the root cause.
-    return { error: `Reset failed: ${e instanceof Error ? e.message : String(e)}` };
-  }
+  const supabase = await createClient();
+  // NOTE: keep the supabase-js PKCE call (do NOT switch to a raw /recover
+  // fetch): only the PKCE flow makes gotrue append ?code= to the email link,
+  // which the /auth/callback route needs to establish the recovery session.
+  const { error: resetError } = await supabase.auth.resetPasswordForEmail(email.trim(), {
+    ...(base
+      ? {
+          redirectTo: `${base}/${lang}/auth/callback?next=/${lang}/reset-password`,
+        }
+      : {}),
+  });
+  // Surface real send failures (rate limits, bad redirect) instead of a
+  // silent "success". Unknown emails still return no error (no enumeration).
+  if (resetError) return { error: resetError.message };
   return {};
 }
 
 /** Set a new password (used in an active recovery session). */
 export async function updatePasswordAction(formData: FormData): Promise<ActionResult> {
+  try {
+    return await updatePasswordInner(formData);
+  } catch (e) {
+    return { error: `Reset failed: ${e instanceof Error ? e.message : String(e)}` };
+  }
+}
+
+async function updatePasswordInner(formData: FormData): Promise<ActionResult> {
   const lang = getLang(formData);
   const dict = await getDictionary(lang);
 
