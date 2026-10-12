@@ -64,7 +64,7 @@ export default function LoginPage() {
 
       <div className="mt-6 flex items-center justify-between text-sm">
         <Link
-          href={`/${locale}/auth/reset-password`}
+          href={`/${locale}/reset-password`}
           className="text-emerald-700 hover:underline dark:text-emerald-400"
         >
           {dict.auth.forgotPassword}
