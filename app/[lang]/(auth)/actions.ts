@@ -184,14 +184,22 @@ export async function requestPasswordResetAction(formData: FormData): Promise<Ac
   }
 
   const base = siteUrl();
-  const supabase = await createClient();
-  await supabase.auth.resetPasswordForEmail(email.trim(), {
-    ...(base
-      ? {
-          redirectTo: `${base}/${lang}/auth/callback?next=/${lang}/reset-password`,
-        }
-      : {}),
-  });
+  try {
+    const supabase = await createClient();
+    const { error: resetError } = await supabase.auth.resetPasswordForEmail(email.trim(), {
+      ...(base
+        ? {
+            redirectTo: `${base}/${lang}/auth/callback?next=/${lang}/reset-password`,
+          }
+        : {}),
+    });
+    // Surface real send failures (rate limits, bad redirect) instead of a
+    // silent "success". Unknown emails still return no error (no enumeration).
+    if (resetError) return { error: resetError.message };
+  } catch (e) {
+    // TEMPORARY diagnostic: surface the real throw so we can fix the root cause.
+    return { error: `Reset failed: ${e instanceof Error ? e.message : String(e)}` };
+  }
   return {};
 }
 
@@ -210,7 +218,7 @@ export async function updatePasswordAction(formData: FormData): Promise<ActionRe
 
   const newPassword = formData.get("confirm");
   if (newPassword !== parsed.data.password) {
-    return { error: dict.validation.genericError };
+    return { error: dict.validation.passwordMismatch };
   }
 
   const supabase = await createClient();
