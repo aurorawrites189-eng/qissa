@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
     {
       cookies: {
         getAll: () => request.cookies.getAll(),
-        setAll: (list) => {
+        setAll: (list: { name: string; value: string; options: CookieOptions }[]) => {
           cookiesToSet.push(...list);
         },
       },
