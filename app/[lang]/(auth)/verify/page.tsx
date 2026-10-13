@@ -17,10 +17,12 @@ export default function VerifyPage() {
     e.preventDefault();
     setPending(true);
     try {
-      const formData = new FormData();
-      formData.set("lang", locale);
-      formData.set("email", email);
-      await resendVerificationAction(formData);
+      // Resend via Route Handler (JSON) — see login page for why.
+      await fetch(`/${locale}/api/auth/resend`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, lang: locale }),
+      });
       setDone(true);
     } finally {
       setPending(false);
