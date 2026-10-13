@@ -12,7 +12,7 @@ function msg(e: unknown): string {
   return e instanceof Error ? `${e.name}: ${e.message}` : String(e);
 }
 
-export async function GET() {
+export async function GET(request: Request) {
   const out: Record<string, string> = {};
 
   // 1. Import every module in the actions.ts import graph, one by one.
@@ -96,6 +96,32 @@ export async function GET() {
     out.resetAction = "returned: " + JSON.stringify(result);
   } catch (e) {
     out.resetAction = "THROW: " + msg(e);
+  }
+
+  // 7. Self-fetch: perform a REAL Server Action POST (Next-Action transport)
+  // against this same worker, exactly like the browser does.
+  try {
+    const selfUrl = new URL("/en/reset-password", request.url);
+    const boundary = "----debugboundary123";
+    const body =
+      `--${boundary}\r\nContent-Disposition: form-data; name="email"\r\n\r\ntest@example.com\r\n` +
+      `--${boundary}\r\nContent-Disposition: form-data; name="lang"\r\n\r\nen\r\n` +
+      `--${boundary}--\r\n`;
+    const tree = encodeURIComponent('["",{},null,null,true]');
+    const res = await fetch(selfUrl, {
+      method: "POST",
+      headers: {
+        "Next-Action": "696048f016bdef2885eca80978761ca1386e90",
+        "Next-Router-State-Tree": tree,
+        "Content-Type": `multipart/form-data; boundary=${boundary}`,
+      },
+      body,
+      signal: AbortSignal.timeout(20000),
+    });
+    const text = await res.text();
+    out.selfActionPost = `HTTP ${res.status} body[0:400]=` + text.slice(0, 400);
+  } catch (e) {
+    out.selfActionPost = "THROW/HANG: " + msg(e);
   }
 
   return NextResponse.json(out);
