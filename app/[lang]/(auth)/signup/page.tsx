@@ -2,13 +2,14 @@
 
 import Link from "next/link";
 import { useState, type FormEvent } from "react";
+import { useRouter } from "next/navigation";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
-import { signupAction } from "../actions";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 
 export default function SignupPage() {
   const { locale, dict } = useLanguage();
+  const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string[] | undefined>>({});
   const [pending, setPending] = useState(false);
@@ -20,11 +21,32 @@ export default function SignupPage() {
     setPending(true);
     try {
       const formData = new FormData(e.currentTarget);
-      formData.set("lang", locale);
-      // On success the action redirects to the verify page.
-      const result = await signupAction(formData);
-      if (result?.error) setError(result.error);
-      if (result?.fieldErrors) setFieldErrors(result.fieldErrors);
+      // Sign up via Route Handler (JSON) — see login page for why.
+      const res = await fetch(`/${locale}/api/auth/signup`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: formData.get("email"),
+          password: formData.get("password"),
+          username: formData.get("username"),
+          birth_year: formData.get("birth_year"),
+          preferred_language: formData.get("preferred_language"),
+          lang: locale,
+        }),
+      });
+      const data = (await res.json()) as {
+        ok?: boolean;
+        dest?: string;
+        error?: string;
+        fieldErrors?: Record<string, string[] | undefined>;
+      };
+      if (!res.ok || data.error) {
+        setError(data.error ?? dict.validation.genericError);
+        if (data.fieldErrors) setFieldErrors(data.fieldErrors);
+      } else if (data.dest) {
+        router.push(data.dest);
+        router.refresh();
+      }
     } catch {
       setError(dict.validation.genericError);
     } finally {
