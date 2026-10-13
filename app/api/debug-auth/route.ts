@@ -100,7 +100,24 @@ export async function GET(request: Request) {
 
   // 7. Self-fetch: perform a REAL Server Action POST (Next-Action transport)
   // against this same worker, exactly like the browser does.
+  // The action ID is extracted live from the page's JS chunk (IDs change per build).
   try {
+    const base = new URL(request.url).origin;
+    const pageHtml = await (await fetch(`${base}/en/reset-password`)).text();
+    const chunkMatch = pageHtml.match(
+      /app\/%5Blang%5D\/\(auth\)\/reset-password\/(page-[^"]+)\.js/
+    );
+    if (!chunkMatch) throw new Error("chunk not found in HTML");
+    const chunkJs = await (
+      await fetch(`${base}/_next/static/chunks/app/%5Blang%5D/(auth)/reset-password/${chunkMatch[1]}.js`)
+    ).text();
+    const idMatch = chunkJs.match(
+      /createServerReference\("([a-f0-9]+)"[^)]*"requestPasswordResetAction"/
+    );
+    if (!idMatch) throw new Error("action ID not found in chunk");
+    const actionId = idMatch[1];
+    out.selfActionId = actionId;
+
     const selfUrl = new URL("/en/reset-password", request.url);
     const boundary = "----debugboundary123";
     const body =
@@ -111,7 +128,7 @@ export async function GET(request: Request) {
     const res = await fetch(selfUrl, {
       method: "POST",
       headers: {
-        "Next-Action": "cd65147f80e69eb669",
+        "Next-Action": actionId,
         "Next-Router-State-Tree": tree,
         "Content-Type": `multipart/form-data; boundary=${boundary}`,
       },
