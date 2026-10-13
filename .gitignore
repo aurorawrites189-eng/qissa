@@ -5,6 +5,9 @@
 /.next/
 /out/
 
+# cloudflare next-on-pages build output (never commit)
+/.vercel/
+
 # env files (never commit real secrets)
 .env
 .env.local
