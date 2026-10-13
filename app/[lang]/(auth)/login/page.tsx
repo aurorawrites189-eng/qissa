@@ -2,13 +2,14 @@
 
 import Link from "next/link";
 import { useState, type FormEvent } from "react";
+import { useRouter } from "next/navigation";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
-import { loginAction } from "../actions";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 
 export default function LoginPage() {
   const { locale, dict } = useLanguage();
+  const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
 
@@ -18,10 +19,29 @@ export default function LoginPage() {
     setPending(true);
     try {
       const formData = new FormData(e.currentTarget);
-      formData.set("lang", locale);
-      // On success the action redirects; on failure it returns { error }.
-      const result = await loginAction(formData);
-      if (result?.error) setError(result.error);
+      // Login via Route Handler (JSON): the Server Action transport is
+      // unreliable on this deployment, so auth uses plain HTTP instead.
+      const res = await fetch(`/${locale}/api/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: formData.get("email"),
+          password: formData.get("password"),
+          lang: locale,
+        }),
+      });
+      const data = (await res.json()) as {
+        ok?: boolean;
+        dest?: string;
+        error?: string;
+        fieldErrors?: Record<string, string[] | undefined>;
+      };
+      if (!res.ok || data.error) {
+        setError(data.error ?? dict.validation.genericError);
+      } else if (data.dest) {
+        router.push(data.dest);
+        router.refresh();
+      }
     } catch {
       setError(dict.validation.genericError);
     } finally {
