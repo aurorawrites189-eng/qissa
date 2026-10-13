@@ -111,7 +111,7 @@ export async function GET(request: Request) {
     const res = await fetch(selfUrl, {
       method: "POST",
       headers: {
-        "Next-Action": "696048f016bdef2885eca80978761ca1386e90",
+        "Next-Action": "cd65147f80e69eb669",
         "Next-Router-State-Tree": tree,
         "Content-Type": `multipart/form-data; boundary=${boundary}`,
       },
