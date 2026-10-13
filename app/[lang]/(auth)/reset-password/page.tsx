@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useEffect, useState, type FormEvent } from "react";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
 import { createClient } from "@/lib/supabase/client";
-import { requestPasswordResetAction, updatePasswordAction } from "../actions";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 
@@ -35,9 +34,14 @@ export default function ResetPasswordPage() {
     setPending(true);
     try {
       const formData = new FormData(e.currentTarget);
-      formData.set("lang", locale);
-      const result = await requestPasswordResetAction(formData);
-      if (result?.error) setError(result.error);
+      // Reset via Route Handler (JSON) — see login page for why.
+      const res = await fetch(`/${locale}/api/auth/reset`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: formData.get("email"), lang: locale }),
+      });
+      const data = (await res.json()) as { ok?: boolean; error?: string };
+      if (!res.ok || data.error) setError(data.error ?? dict.validation.genericError);
       else setDone(true);
     } catch {
       setError(dict.validation.genericError);
@@ -52,9 +56,17 @@ export default function ResetPasswordPage() {
     setPending(true);
     try {
       const formData = new FormData(e.currentTarget);
-      formData.set("lang", locale);
-      const result = await updatePasswordAction(formData);
-      if (result?.error) setError(result.error);
+      const res = await fetch(`/${locale}/api/auth/update-password`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          password: formData.get("password"),
+          confirm: formData.get("confirm"),
+          lang: locale,
+        }),
+      });
+      const data = (await res.json()) as { ok?: boolean; error?: string };
+      if (!res.ok || data.error) setError(data.error ?? dict.validation.genericError);
       else setDone(true);
     } catch {
       setError(dict.validation.genericError);
