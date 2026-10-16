@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   description: SITE.tagline,
   // Google Search Console ownership verification (meta tag supplied by the site owner).
   verification: {
-    google: "XLbYSXxKfMA8DeZtFq3An0LvrgGnO-oTDT7Gvu9HPKE",
+    google: "I23x8fplXm806WEm2SNhslb2aQBzlJLF4F-FcHSbbQQ",
   },
 };
 
