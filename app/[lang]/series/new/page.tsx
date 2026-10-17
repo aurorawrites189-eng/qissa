@@ -25,7 +25,7 @@ async function createSeries(formData: FormData) {
     .single();
   if (!error && data) {
     const lang = language;
-    redirect(`/${lang}/series/${(data as { id: string }).id}`);
+    redirect(`/series/${(data as { id: string }).id}`);
   }
 }
 
@@ -42,7 +42,7 @@ export default async function NewSeriesPage({ params: _params }: { params: Promi
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  if (!user) redirect(`/${lang}/login`);
+  if (!user) redirect(`/login`);
 
   const t = dict.series as Record<string, string>;
 
