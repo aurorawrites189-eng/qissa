@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { SITE, type Locale } from "@/lib/site-config";
+import { SITE } from "@/lib/site-config";
 import { createClient } from "@/lib/supabase/server";
 
 export const runtime = "edge";
@@ -11,10 +11,13 @@ export const revalidate = 3600;
 /**
  * Sitemap for NazmHub.
  *
- * Static locale routes plus every published public post:
- *   /{lang}/posts/{id}          — regular articles & stories
- *   /{lang}/kids/story/{id}     — kids-approved stories only
- * Each URL uses the post's own language, not both locales.
+ * Clean-URL strategy (Oct 2026): public URLs carry no language prefix.
+ * The language is determined by the nazmhub-lang cookie, so each page has
+ * ONE canonical URL:
+ *   /posts/{id}          — regular articles & stories
+ *   /kids/story/{id}     — kids-approved stories only
+ *   /series/{id}         — serial series
+ *   /series/{id}/{ep}    — serial episodes
  */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base = SITE.url.replace(/\/$/, "");
@@ -37,15 +40,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ];
 
   const entries: MetadataRoute.Sitemap = [];
-  for (const lang of SITE.locales as readonly Locale[]) {
-    for (const { path, changeFrequency, priority } of staticPaths) {
-      entries.push({
-        url: `${base}/${lang}${path}`,
-        lastModified: new Date(),
-        changeFrequency,
-        priority,
-      });
-    }
+  for (const { path, changeFrequency, priority } of staticPaths) {
+    entries.push({
+      url: `${base}${path}`,
+      lastModified: new Date(),
+      changeFrequency,
+      priority,
+    });
   }
 
   // ---- Dynamic post URLs (published + public only) ----
@@ -60,19 +61,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       .limit(5000);
 
     for (const post of posts ?? []) {
-      const lang = (post.language === "ur" ? "ur" : "en") as Locale;
       const lastModified = new Date(
         post.updated_at ?? post.published_at ?? Date.now()
       );
       entries.push({
-        url: `${base}/${lang}/posts/${post.id}`,
+        url: `${base}/posts/${post.id}`,
         lastModified,
         changeFrequency: "weekly",
         priority: 0.7,
       });
       if (post.is_kids_approved) {
         entries.push({
-          url: `${base}/${lang}/kids/story/${post.id}`,
+          url: `${base}/kids/story/${post.id}`,
           lastModified,
           changeFrequency: "weekly",
           priority: 0.8,
@@ -91,9 +91,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       .select("id, language, created_at")
       .limit(500);
     for (const s of allSeries ?? []) {
-      const lang = (s.language === "ur" ? "ur" : "en") as Locale;
       entries.push({
-        url: `${base}/${lang}/series/${s.id}`,
+        url: `${base}/series/${s.id}`,
         lastModified: new Date(s.created_at ?? Date.now()),
         changeFrequency: "weekly",
         priority: 0.8,
@@ -108,7 +107,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       for (const ep of eps ?? []) {
         if (!ep.episode_number) continue;
         entries.push({
-          url: `${base}/${lang}/series/${s.id}/${ep.episode_number}`,
+          url: `${base}/series/${s.id}/${ep.episode_number}`,
           lastModified: new Date(ep.updated_at ?? ep.published_at ?? Date.now()),
           changeFrequency: "weekly",
           priority: 0.7,
