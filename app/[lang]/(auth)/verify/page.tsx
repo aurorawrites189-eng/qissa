@@ -18,7 +18,7 @@ export default function VerifyPage() {
     setPending(true);
     try {
       // Resend via Route Handler (JSON) — see login page for why.
-      await fetch(`/${locale}/api/auth/resend`, {
+      await fetch(`/api/auth/resend`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, lang: locale }),
@@ -59,7 +59,7 @@ export default function VerifyPage() {
       </div>
 
       <Link
-        href={`/${locale}/login`}
+        href={`/login`}
         className="mt-6 inline-block text-sm text-emerald-700 hover:underline dark:text-emerald-400"
       >
         {dict.auth.backToLogin}
