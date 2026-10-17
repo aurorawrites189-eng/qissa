@@ -12,7 +12,7 @@ export function ViewCounter({ postId, lang }: { postId: string; lang: Locale }) 
   useEffect(() => {
     // NOTE: React 18 StrictMode double-invokes effects in development, so
     // views may count twice locally. Production builds are unaffected.
-    fetch(`/${lang}/api/posts/${postId}/views`, { method: "POST" }).catch(() => {});
+    fetch(`/api/posts/${postId}/views`, { method: "POST" }).catch(() => {});
   }, [postId, lang]);
 
   return null;
