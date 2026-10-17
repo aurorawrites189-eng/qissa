@@ -35,7 +35,7 @@ export default function ResetPasswordPage() {
     try {
       const formData = new FormData(e.currentTarget);
       // Reset via Route Handler (JSON) — see login page for why.
-      const res = await fetch(`/${locale}/api/auth/reset`, {
+      const res = await fetch(`/api/auth/reset`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: formData.get("email"), lang: locale }),
@@ -56,7 +56,7 @@ export default function ResetPasswordPage() {
     setPending(true);
     try {
       const formData = new FormData(e.currentTarget);
-      const res = await fetch(`/${locale}/api/auth/update-password`, {
+      const res = await fetch(`/api/auth/update-password`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -110,7 +110,7 @@ export default function ResetPasswordPage() {
                 {dict.auth.passwordUpdated}
               </p>
               <Link
-                href={`/${locale}/login`}
+                href={`/login`}
                 className="mt-4 inline-block text-sm text-emerald-700 hover:underline dark:text-emerald-400"
               >
                 {dict.auth.backToLogin}
