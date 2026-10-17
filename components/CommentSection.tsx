@@ -31,7 +31,7 @@ export function CommentSection({ postId, lang, dict, canComment, signedIn, isChi
 
   useEffect(() => {
     let cancelled = false;
-    fetch(`/${lang}/api/posts/${postId}/comments`)
+    fetch(`/api/posts/${postId}/comments`)
       .then((r) => (r.ok ? r.json() : { comments: [] }))
       .then((d) => {
         if (!cancelled) {
@@ -53,7 +53,7 @@ export function CommentSection({ postId, lang, dict, canComment, signedIn, isChi
     setPosting(true);
     setError(false);
     try {
-      const res = await fetch(`/${lang}/api/posts/${postId}/comments`, {
+      const res = await fetch(`/api/posts/${postId}/comments`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ content }),
@@ -63,7 +63,7 @@ export function CommentSection({ postId, lang, dict, canComment, signedIn, isChi
       setComments((cs) => [...cs, { ...data.comment, author: null }]);
       setDraft("");
       // Refresh to get author info attached.
-      fetch(`/${lang}/api/posts/${postId}/comments`)
+      fetch(`/api/posts/${postId}/comments`)
         .then((r) => r.json())
         .then((d) => setComments(d.comments ?? []))
         .catch(() => {});
