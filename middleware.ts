@@ -48,7 +48,7 @@ export default async function middleware(request: NextRequest) {
   const firstSeg = pathname.split("/")[1];
   if (isLocale(firstSeg)) {
     const rest = pathname.slice(firstSeg.length + 1); // "" or "/kids" etc.
-    const cleanPath = rest ? `/${rest}` : "/";
+    const cleanPath = rest || "/";
     const url = request.nextUrl.clone();
     url.pathname = cleanPath;
     // Preserve query string on redirect.
