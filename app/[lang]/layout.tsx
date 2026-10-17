@@ -13,17 +13,66 @@ import "../globals.css";
 // page under [lang] edge-compatible (required by @cloudflare/next-on-pages).
 export const runtime = "edge";
 
-export const metadata: Metadata = {
-  title: {
-    default: `${SITE.name} — ${SITE.tagline}`,
-    template: `%s · ${SITE.name}`,
-  },
-  description: SITE.tagline,
-  // Google Search Console ownership verification (meta tag supplied by the site owner).
-  verification: {
-    google: "I23x8fplXm806WEm2SNhslb2aQBzlJLF4F-FcHSbbQQ",
-  },
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  const locale: Locale = isLocale(lang) ? lang : "en";
+  const base = SITE.url.replace(/\/$/, "");
+  const title = `${SITE.name} — ${SITE.tagline}`;
+  const description =
+    locale === "ur"
+      ? `${SITE.nameUrdu} — ${SITE.taglineUrdu} اردو اور انگریزی میں لکھنے اور پڑھنے کی کمیونٹی۔`
+      : `${SITE.name} — ${SITE.tagline} A multilingual (Urdu + English) community for writers and readers.`;
+  return {
+    metadataBase: new URL(base),
+    title: {
+      default: title,
+      template: `%s · ${SITE.name}`,
+    },
+    description,
+    alternates: {
+      canonical: base,
+    },
+    openGraph: {
+      type: "website",
+      siteName: SITE.name,
+      title,
+      description,
+      url: base,
+      locale: locale === "ur" ? "ur_PK" : "en_US",
+      alternateLocale: locale === "ur" ? ["en_US"] : ["ur_PK"],
+      images: [
+        {
+          url: `${base}/og-image.png`,
+          width: 1200,
+          height: 630,
+          alt: `${SITE.name} — ${SITE.tagline}`,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [`${base}/og-image.png`],
+    },
+    robots: {
+      index: true,
+      follow: true,
+    },
+    icons: {
+      icon: "/favicon.png",
+      apple: "/favicon.png",
+    },
+    // Google Search Console ownership verification (meta tag supplied by the site owner).
+    verification: {
+      google: "I23x8fplXm806WEm2SNhslb2aQBzlJLF4F-FcHSbbQQ",
+    },
+  };
+}
 
 // Applies the saved (or system-preferred) theme before first paint so the
 // page doesn't flash the wrong color scheme.
