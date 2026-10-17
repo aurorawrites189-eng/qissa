@@ -6,55 +6,119 @@ import { isLocale } from "./lib/i18n/config";
 import { SITE, type Locale } from "./lib/site-config";
 
 /**
- * Age-gated routing.
+ * Language cookie name. The user's language preference is stored here;
+ * middleware reads it to rewrite clean URLs (e.g. /kids) to the internal
+ * /{lang}/... routes. Defaults to SITE.defaultLocale when absent.
+ */
+export const LANG_COOKIE = "nazmhub-lang";
+
+function getLangFromCookie(request: NextRequest): Locale {
+  const v = request.cookies.get(LANG_COOKIE)?.value;
+  return v && isLocale(v) ? v : SITE.defaultLocale;
+}
+
+/**
+ * Age-gated routing + clean-URL language rewrites.
  *
- * IMPORTANT: this middleware is UX only. The real enforcement lives in the
- * database: RLS policies (see supabase/migrations/0001_schema.sql) make it
- * impossible for a child account to read non-kids-approved posts even if
- * this middleware is bypassed.
+ * URL strategy (Oct 2026): public URLs carry NO language prefix.
+ *   /kids            -> rewritten internally to /{lang}/kids
+ *   /                -> rewritten internally to /{lang}
+ *   /en/kids (old)   -> 301 redirect to /kids (+ sets nazmhub-lang=en)
+ *   /ur/kids (old)   -> 301 redirect to /kids (+ sets nazmhub-lang=ur)
+ *
+ * The [lang] app directory is kept as-is; the rewrite makes params.lang
+ * resolve from the cookie. All internal link generation must use clean
+ * URLs (no /{lang} prefix).
+ *
+ * Age-gating note: the checks below run against the EFFECTIVE
+ * lang-prefixed path (what the rewrite target would be), so the child
+ * restrictions keep working on clean URLs.
+ *
+ * IMPORTANT: the RLS policies are the real enforcement; this middleware
+ * is UX only (see supabase/migrations/0001_schema.sql).
  */
 export default async function middleware(request: NextRequest) {
   // 1. Refresh the Supabase session cookie on every request.
-  const response = await updateSession(request);
+  const sessionResponse = await updateSession(request);
 
   const { pathname } = request.nextUrl;
 
-  // Root redirects to the default locale.
-  if (pathname === "/") {
-    return NextResponse.redirect(new URL(`/${SITE.defaultLocale}`, request.url));
+  // 2. Old-style /en/* and /ur/* URLs: 301 redirect to the clean URL and
+  //    remember the explicit language choice in the cookie.
+  const firstSeg = pathname.split("/")[1];
+  if (isLocale(firstSeg)) {
+    const rest = pathname.slice(firstSeg.length + 1); // "" or "/kids" etc.
+    const cleanPath = rest ? `/${rest}` : "/";
+    const url = request.nextUrl.clone();
+    url.pathname = cleanPath;
+    // Preserve query string on redirect.
+    const redirectRes = NextResponse.redirect(url, 301);
+    redirectRes.cookies.set(LANG_COOKIE, firstSeg, {
+      path: "/",
+      maxAge: 60 * 60 * 24 * 365,
+      sameSite: "lax",
+    });
+    // Carry over any Supabase session cookies set by updateSession.
+    for (const c of sessionResponse.cookies.getAll()) {
+      redirectRes.cookies.set(c.name, c.value);
+    }
+    return redirectRes;
   }
 
-  const maybeLang = pathname.split("/")[1];
-  const lang: Locale = isLocale(maybeLang) ? maybeLang : SITE.defaultLocale;
+  const lang: Locale = getLangFromCookie(request);
 
-  // 2. Paths a child account is allowed to visit.
+  // Paths that are NOT part of the localized [lang] tree and must pass
+  // through untouched (no rewrite): the sitemap, robots.txt, and the
+  // temporary diagnostic route at app/api/debug-auth.
+  const passthroughPaths = ["/sitemap.xml", "/robots.txt", "/api/debug-auth"];
+  if (passthroughPaths.some((p) => pathname === p || pathname.startsWith(`${p}/`))) {
+    return sessionResponse;
+  }
+
+  // Effective internal path (what the [lang] router will see).
+  const effectivePath = pathname === "/" ? `/${lang}` : `/${lang}${pathname}`;
+
+  // Helper: build a rewrite response to the effective path while keeping
+  // the Supabase session cookies from updateSession().
+  const rewriteWithSession = () => {
+    const url = request.nextUrl.clone();
+    url.pathname = effectivePath;
+    const res = NextResponse.rewrite(url);
+    for (const c of sessionResponse.cookies.getAll()) {
+      res.cookies.set(c.name, c.value);
+    }
+    return res;
+  };
+
+  // 3. Paths a child account is allowed to visit (checked against the
+  //    effective lang-prefixed path).
   //
-  // API allowlist for children (Phase 4 fix): Phase 1 middleware
-  // 307-redirected child sessions away from EVERYTHING under /api/*, which
-  // broke legitimate kid actions (reading-history upsert, filing reports,
-  // fetching notifications). Children may now call:
+  // API allowlist for children (Phase 4 fix): children may call
   //   - /[lang]/api/kids/*            (any method — e.g. reading history)
   //   - POST /[lang]/api/reports      (filing a report)
   //   - GET  /[lang]/api/notifications (reading own notifications)
   // Everything else under /api/* stays blocked for children (and RLS
   // policies backstop these endpoints regardless of this middleware).
+  //
+  // NOTE: clean-URL API calls are /api/*; the effective path is
+  // /{lang}/api/* after the rewrite mapping.
   const apiPrefix = `/${lang}/api/`;
   const childApiAllowed =
-    (request.method === "POST" && pathname === `${apiPrefix}reports`) ||
-    (request.method === "GET" && pathname === `${apiPrefix}notifications`) ||
-    pathname.startsWith(`${apiPrefix}kids/`);
+    (request.method === "POST" && effectivePath === `${apiPrefix}reports`) ||
+    (request.method === "GET" && effectivePath === `${apiPrefix}notifications`) ||
+    effectivePath.startsWith(`${apiPrefix}kids/`);
 
   const childAllowed =
-    pathname === `/${lang}` ||
-    pathname === `/${lang}/kids` ||
-    pathname.startsWith(`/${lang}/kids/`) ||
-    pathname.startsWith(`/${lang}/auth/`) ||
-    pathname.startsWith("/auth/") ||
+    effectivePath === `/${lang}` ||
+    effectivePath === `/${lang}/kids` ||
+    effectivePath.startsWith(`/${lang}/kids/`) ||
+    effectivePath.startsWith(`/${lang}/auth/`) ||
+    effectivePath.startsWith("/auth/") ||
     childApiAllowed;
 
-  if (childAllowed) return response;
+  if (childAllowed) return rewriteWithSession();
 
-  // 3. For everything else, look up the viewer's age_class. Anonymous
+  // 4. For everything else, look up the viewer's age_class. Anonymous
   // visitors are treated as adults here (RLS still filters what they see).
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -65,7 +129,7 @@ export default async function middleware(request: NextRequest) {
         setAll: (cookiesToSet: { name: string; value: string; options: CookieOptions }[]) => {
           cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value));
           cookiesToSet.forEach(({ name, value, options }) =>
-            response.cookies.set(name, value, options)
+            sessionResponse.cookies.set(name, value, options)
           );
         },
       },
@@ -75,7 +139,7 @@ export default async function middleware(request: NextRequest) {
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  if (!user) return response;
+  if (!user) return rewriteWithSession();
 
   const { data: profile } = await supabase
     .from("profiles")
@@ -84,13 +148,14 @@ export default async function middleware(request: NextRequest) {
     .maybeSingle();
 
   if (profile?.age_class === "child") {
+    // Redirect to the clean /kids URL; the rewrite maps it to /{lang}/kids.
     const url = request.nextUrl.clone();
-    url.pathname = `/${lang}/kids`;
+    url.pathname = "/kids";
     url.search = "";
     return NextResponse.redirect(url);
   }
 
-  return response;
+  return rewriteWithSession();
 }
 
 export const config = {
