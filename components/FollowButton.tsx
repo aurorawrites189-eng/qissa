@@ -23,7 +23,7 @@ export function FollowButton({ username, lang, dict, initialFollowing, signedIn,
   if (!signedIn) {
     return (
       <a
-        href={`/${lang}/login`}
+        href={`/login`}
         className="rounded-lg bg-emerald-700 px-4 py-1.5 text-sm font-medium text-white hover:bg-emerald-800 dark:bg-emerald-600 dark:hover:bg-emerald-500"
       >
         {dict.social.follow}
@@ -37,7 +37,7 @@ export function FollowButton({ username, lang, dict, initialFollowing, signedIn,
     const next = !following;
     setFollowing(next); // optimistic
     try {
-      const res = await fetch(`/${lang}/api/follow/${encodeURIComponent(username)}`, {
+      const res = await fetch(`/api/follow/${encodeURIComponent(username)}`, {
         method: next ? "POST" : "DELETE",
       });
       if (!res.ok) throw new Error("failed");
