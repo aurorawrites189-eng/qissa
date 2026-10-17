@@ -29,7 +29,7 @@ export function ReportDialog({ postId, lang, dict, signedIn }: ReportDialogProps
     if (reason.trim().length < 3 || state === "sending") return;
     setState("sending");
     try {
-      const res = await fetch(`/${lang}/api/reports`, {
+      const res = await fetch(`/api/reports`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ post_id: postId, reason: reason.trim(), details: details.trim() || undefined }),
