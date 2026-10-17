@@ -51,7 +51,7 @@ async function createEpisode(seriesId: string, lang: string, formData: FormData)
     series_id: seriesId,
     episode_number: nextNum,
   });
-  if (!error) redirect(`/${lang}/series/${seriesId}`);
+  if (!error) redirect(`/series/${seriesId}`);
 }
 
 /**
@@ -71,7 +71,7 @@ export default async function NewEpisodePage({
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  if (!user) redirect(`/${lang}/login`);
+  if (!user) redirect(`/login`);
 
   const { data: s } = await supabase
     .from("series")
