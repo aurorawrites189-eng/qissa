@@ -43,33 +43,33 @@ export function Header({ locale, dict }: { locale: Locale; dict: Dictionary }) {
 
   const signOut = () => {
     // GET signs out server-side (clearing cookies) and redirects home.
-    window.location.assign(`/${locale}/auth/signout`);
+    window.location.assign(`/auth/signout`);
     router.refresh();
   };
 
   return (
     <header className="border-b border-neutral-200 bg-white/80 backdrop-blur dark:border-neutral-800 dark:bg-neutral-950/80">
       <nav className="mx-auto flex max-w-6xl items-center gap-4 px-4 py-3">
-        <Link href={`/${locale}`} className="flex items-baseline gap-2 font-bold">
+        <Link href={"/"} className="flex items-baseline gap-2 font-bold">
           <span className="text-xl text-emerald-800 dark:text-emerald-400">{SITE.name}</span>
           <span className="text-lg text-neutral-500">{SITE.nameUrdu}</span>
         </Link>
 
         <div className="flex items-center gap-1 text-sm">
           <Link
-            href={`/${locale}`}
+            href={"/"}
             className="rounded-lg px-3 py-2 text-neutral-700 hover:bg-neutral-100 dark:text-neutral-200 dark:hover:bg-neutral-800"
           >
             {dict.nav.home}
           </Link>
           <Link
-            href={`/${locale}/kids`}
+            href={`/kids`}
             className="rounded-lg px-3 py-2 text-neutral-700 hover:bg-neutral-100 dark:text-neutral-200 dark:hover:bg-neutral-800"
           >
             {dict.nav.kids}
           </Link>
           <Link
-            href={`/${locale}/series`}
+            href={`/series`}
             className="rounded-lg px-3 py-2 text-neutral-700 hover:bg-neutral-100 dark:text-neutral-200 dark:hover:bg-neutral-800"
           >
             {dict.nav.series}
@@ -93,12 +93,12 @@ export function Header({ locale, dict }: { locale: Locale; dict: Dictionary }) {
           ) : (
             <>
               <Link
-                href={`/${locale}/login`}
+                href={`/login`}
                 className="rounded-lg px-3 py-2 text-sm text-neutral-700 hover:bg-neutral-100 dark:text-neutral-200 dark:hover:bg-neutral-800"
               >
                 {dict.nav.login}
               </Link>
-              <Link href={`/${locale}/signup`}>
+              <Link href={`/signup`}>
                 <Button>{dict.nav.signup}</Button>
               </Link>
             </>
