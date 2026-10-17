@@ -1,7 +1,6 @@
 "use client";
 
 import { createContext, useContext, type ReactNode } from "react";
-import { usePathname, useRouter } from "next/navigation";
 import type { Dictionary } from "./types";
 import type { Locale } from "../site-config";
 
@@ -22,15 +21,14 @@ export function LanguageProvider({
   dict: Dictionary;
   children: ReactNode;
 }) {
-  const router = useRouter();
-  const pathname = usePathname();
-
   const setLocale = (next: Locale) => {
     if (next === locale) return;
-    // Swap the locale prefix, keep the rest of the path.
-    const segments = pathname.split("/");
-    segments[1] = next;
-    router.push(segments.join("/") || "/");
+    // Clean-URL strategy (Oct 2026): the language lives in the
+    // "nazmhub-lang" cookie (see middleware.ts), not the URL path.
+    // Set the cookie and reload; middleware rewrites the current clean
+    // URL (e.g. /kids) to /{next}/... on the next request.
+    document.cookie = `nazmhub-lang=${next}; path=/; max-age=31536000; SameSite=Lax`;
+    window.location.reload();
   };
 
   return (
