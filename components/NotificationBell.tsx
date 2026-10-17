@@ -38,7 +38,7 @@ function describe(n: Notification, dict: Dictionary): string {
 
 function storyLink(n: Notification, lang: Locale): string | null {
   const postId = n.payload?.postId;
-  return typeof postId === "string" ? `/${lang}/posts/${postId}` : null;
+  return typeof postId === "string" ? `/posts/${postId}` : null;
 }
 
 /** Header bell: unread badge, dropdown list, mark-all-read. Polls every 60s. */
@@ -50,7 +50,7 @@ export function NotificationBell({ lang, dict }: NotificationBellProps) {
 
   const load = useCallback(async () => {
     try {
-      const res = await fetch(`/${lang}/api/notifications?limit=15`);
+      const res = await fetch(`/api/notifications?limit=15`);
       if (!res.ok) return;
       const data = await res.json();
       setItems(data.notifications ?? []);
@@ -75,7 +75,7 @@ export function NotificationBell({ lang, dict }: NotificationBellProps) {
 
   const markAllRead = async () => {
     try {
-      await fetch(`/${lang}/api/notifications`, {
+      await fetch(`/api/notifications`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ markAll: true }),
