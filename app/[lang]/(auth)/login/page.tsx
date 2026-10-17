@@ -21,7 +21,7 @@ export default function LoginPage() {
       const formData = new FormData(e.currentTarget);
       // Login via Route Handler (JSON): the Server Action transport is
       // unreliable on this deployment, so auth uses plain HTTP instead.
-      const res = await fetch(`/${locale}/api/auth/login`, {
+      const res = await fetch(`/api/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -84,7 +84,7 @@ export default function LoginPage() {
 
       <div className="mt-6 flex items-center justify-between text-sm">
         <Link
-          href={`/${locale}/reset-password`}
+          href={`/reset-password`}
           className="text-emerald-700 hover:underline dark:text-emerald-400"
         >
           {dict.auth.forgotPassword}
@@ -92,7 +92,7 @@ export default function LoginPage() {
         <p className="text-neutral-500">
           {dict.auth.noAccount}{" "}
           <Link
-            href={`/${locale}/signup`}
+            href={`/signup`}
             className="text-emerald-700 hover:underline dark:text-emerald-400"
           >
             {dict.auth.signupButton}
