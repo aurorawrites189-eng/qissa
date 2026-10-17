@@ -45,7 +45,7 @@ export default async function DashboardPage({ params: _params }: { params: Promi
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  if (!user) redirect(`/${lang}/login`);
+  if (!user) redirect(`/login`);
 
   const { data: profile } = await supabase
     .from("profiles")
@@ -54,8 +54,8 @@ export default async function DashboardPage({ params: _params }: { params: Promi
     )
     .eq("id", user.id)
     .maybeSingle();
-  if (!profile) redirect(`/${lang}/login`);
-  if (profile.age_class === "child") redirect(`/${lang}/kids`);
+  if (!profile) redirect(`/login`);
+  if (profile.age_class === "child") redirect(`/kids`);
 
   const me = user.id;
 
@@ -207,10 +207,10 @@ export default async function DashboardPage({ params: _params }: { params: Promi
       <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
         <h1 className="text-3xl font-extrabold">{d.title}</h1>
         <div className="flex gap-2">
-          <Link href={`/${lang}/feed`}>
+          <Link href={`/feed`}>
             <Button variant="secondary">{dict.nav.explore}</Button>
           </Link>
-          <Link href={`/${lang}/write`}>
+          <Link href={`/write`}>
             <Button>{d.newStory}</Button>
           </Link>
         </div>
@@ -343,7 +343,7 @@ export default async function DashboardPage({ params: _params }: { params: Promi
               <EmptyState
                 title={d.emptyDrafts}
                 action={
-                  <Link href={`/${lang}/write`}>
+                  <Link href={`/write`}>
                     <Button>{d.newStory}</Button>
                   </Link>
                 }
@@ -362,10 +362,10 @@ export default async function DashboardPage({ params: _params }: { params: Promi
                       </p>
                     </div>
                     <div className="flex shrink-0 gap-2">
-                      <Link href={`/${lang}/write/${p.id as string}`}>
+                      <Link href={`/write/${p.id as string}`}>
                         <Button variant="secondary">{dict.common.edit}</Button>
                       </Link>
-                      <Link href={`/${lang}/posts/${p.id as string}`}>
+                      <Link href={`/posts/${p.id as string}`}>
                         <Button variant="ghost">{d.viewStory}</Button>
                       </Link>
                     </div>
