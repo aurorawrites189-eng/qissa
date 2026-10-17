@@ -90,7 +90,7 @@ export function EditorForm({
     let cancelled = false;
     (async () => {
       try {
-        const res = await fetch(`/${lang}/api/posts`, {
+        const res = await fetch(`/api/posts`, {
           method: "POST",
           headers: { "content-type": "application/json" },
           body: JSON.stringify({}),
@@ -101,7 +101,7 @@ export function EditorForm({
         setPostId(data.post.id);
         setCreating(false);
         // Swap to the canonical edit URL so refresh keeps working.
-        router.replace(`/${lang}/write/${data.post.id}`);
+        router.replace(`/write/${data.post.id}`);
       } catch {
         if (!cancelled) {
           setCreating(false);
@@ -132,7 +132,7 @@ export function EditorForm({
           visibility: s.visibility,
         };
         if (fields && "cover_image" in fields) payload.cover_image = fields.cover_image;
-        const res = await fetch(`/${lang}/api/posts/${id}`, {
+        const res = await fetch(`/api/posts/${id}`, {
           method: "PATCH",
           headers: { "content-type": "application/json" },
           body: JSON.stringify(payload),
@@ -170,7 +170,7 @@ export function EditorForm({
     try {
       const form = new FormData();
       form.append("file", file);
-      const res = await fetch(`/${lang}/api/upload`, { method: "POST", body: form });
+      const res = await fetch(`/api/upload`, { method: "POST", body: form });
       if (!res.ok) throw new Error(`upload failed: ${res.status}`);
       const data = await res.json();
       const next = { storage_path: data.storage_path as string, alt_text: cover?.alt_text ?? "" };
@@ -199,7 +199,7 @@ export function EditorForm({
     setError(null);
     const s = stateRef.current;
     try {
-      const res = await fetch(`/${lang}/api/posts/${id}`, {
+      const res = await fetch(`/api/posts/${id}`, {
         method: "PATCH",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
@@ -219,7 +219,7 @@ export function EditorForm({
         else setError(w.publishError);
         return;
       }
-      router.push(`/${lang}/dashboard`);
+      router.push(`/dashboard`);
     } catch {
       setError(w.publishError);
     } finally {
@@ -233,9 +233,9 @@ export function EditorForm({
     if (!window.confirm(w.deleteConfirm)) return;
     setDeleting(true);
     try {
-      const res = await fetch(`/${lang}/api/posts/${id}`, { method: "DELETE" });
+      const res = await fetch(`/api/posts/${id}`, { method: "DELETE" });
       if (!res.ok) throw new Error(`delete failed: ${res.status}`);
-      router.push(`/${lang}/dashboard`);
+      router.push(`/dashboard`);
     } catch {
       setError(dict.validation.genericError);
       setDeleting(false);
