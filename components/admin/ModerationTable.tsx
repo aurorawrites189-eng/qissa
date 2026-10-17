@@ -38,7 +38,7 @@ export function ModerationTable({ lang, dict, kind, items }: ModerationTableProp
     setBusy(`${item.id}:${action}`);
     setError(null);
     try {
-      const res = await fetch(`/${lang}/api/admin/moderation`, {
+      const res = await fetch(`/api/admin/moderation`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -116,7 +116,7 @@ export function ModerationTable({ lang, dict, kind, items }: ModerationTableProp
                   <p className="font-semibold">
                     {t.story}:{" "}
                     {item.post ? (
-                      <Link href={`/${lang}/posts/${item.post.id}`} className="text-emerald-700 hover:underline dark:text-emerald-400">
+                      <Link href={`/posts/${item.post.id}`} className="text-emerald-700 hover:underline dark:text-emerald-400">
                         {item.post.title}
                       </Link>
                     ) : (
@@ -130,7 +130,7 @@ export function ModerationTable({ lang, dict, kind, items }: ModerationTableProp
                 </>
               ) : (
                 <>
-                  <Link href={`/${lang}/posts/${item.id}`} className="font-semibold text-emerald-700 hover:underline dark:text-emerald-400">
+                  <Link href={`/posts/${item.id}`} className="font-semibold text-emerald-700 hover:underline dark:text-emerald-400">
                     {item.title}
                   </Link>
                   <p className="text-sm text-neutral-500">
@@ -157,7 +157,7 @@ export function ModerationTable({ lang, dict, kind, items }: ModerationTableProp
               <ul className="mt-2 space-y-2">
                 {(item.originality_evidence.matches ?? []).slice(0, 5).map((m) => (
                   <li key={m.postId} className="rounded-lg bg-white p-2 dark:bg-neutral-900">
-                    <Link href={`/${lang}/posts/${m.postId}`} className="font-medium hover:underline">
+                    <Link href={`/posts/${m.postId}`} className="font-medium hover:underline">
                       {m.title}
                     </Link>{" "}
                     <span className="text-neutral-500">({(m.score * 100).toFixed(1)}%)</span>
