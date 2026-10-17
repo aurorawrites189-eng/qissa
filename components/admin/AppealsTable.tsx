@@ -24,7 +24,7 @@ export function AppealsTable({ lang, dict, appeals }: { lang: Locale; dict: Dict
   const decide = async (appeal: AppealItem, overturn: boolean) => {
     setBusy(`${appeal.id}:${overturn}`);
     try {
-      const res = await fetch(`/${lang}/api/appeals`, {
+      const res = await fetch(`/api/appeals`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ appeal_id: appeal.id, overturn }),
@@ -52,7 +52,7 @@ export function AppealsTable({ lang, dict, appeals }: { lang: Locale; dict: Dict
                 <span className="font-semibold">@{a.user?.username}</span>
                 <span className="text-neutral-500"> · {t.violation}: {a.violation?.type} ({a.violation?.status})</span>
                 {a.violation?.post_id && (
-                  <Link href={`/${lang}/posts/${a.violation.post_id}`} className="ms-2 text-emerald-700 hover:underline dark:text-emerald-400">
+                  <Link href={`/posts/${a.violation.post_id}`} className="ms-2 text-emerald-700 hover:underline dark:text-emerald-400">
                     {dict.admin.moderation.story}
                   </Link>
                 )}
