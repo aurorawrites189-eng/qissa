@@ -28,7 +28,7 @@ export function UsersTable({ lang, dict, users, selfId }: { lang: Locale; dict: 
     if (action === "suspend" && !window.confirm(t.confirmSuspend)) return;
     setBusy(`${user.id}:${action}`);
     try {
-      const res = await fetch(`/${lang}/api/admin/users`, {
+      const res = await fetch(`/api/admin/users`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ action, userId: user.id }),
