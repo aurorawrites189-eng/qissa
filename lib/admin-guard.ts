@@ -12,14 +12,14 @@ export async function requireAdminPage(lang: Locale) {
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  if (!user) redirect(`/${lang}/login`);
+  if (!user) redirect(`/login`);
 
   const { data: profile } = await supabase
     .from("profiles")
     .select("id, username, is_admin")
     .eq("id", user.id)
     .maybeSingle();
-  if (!profile?.is_admin) redirect(`/${lang}`);
+  if (!profile?.is_admin) redirect(`/`);
 
   return { supabase, user, profile };
 }
