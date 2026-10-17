@@ -17,13 +17,13 @@ export default async function WritePage({ params: _params }: { params: Promise<{
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  if (!user) redirect(`/${lang}/login`);
+  if (!user) redirect(`/login`);
   const { data: profile } = await supabase
     .from("profiles")
     .select("age_class")
     .eq("id", user.id)
     .maybeSingle();
-  if (profile?.age_class === "child") redirect(`/${lang}/kids`);
+  if (profile?.age_class === "child") redirect(`/kids`);
 
   const { data: categories } = await supabase
     .from("categories")
