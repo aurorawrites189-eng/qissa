@@ -9,7 +9,7 @@ export const runtime = "edge";
 function homeUrl(request: NextRequest): URL {
   const seg = new URL(request.url).pathname.split("/")[1];
   const lang = isLocale(seg) ? seg : SITE.defaultLocale;
-  return new URL(`/${lang}`, request.url);
+  return new URL(`/`, request.url);
 }
 
 async function signOut(request: NextRequest) {
