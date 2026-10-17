@@ -58,14 +58,14 @@ export async function loginAction(formData: FormData): Promise<ActionResult> {
     data: { user },
   } = await supabase.auth.getUser();
 
-  let dest = `/${lang}`;
+  let dest = `/`;
   if (user) {
     const { data: profile } = await supabase
       .from("profiles")
       .select("age_class")
       .eq("id", user.id)
       .maybeSingle();
-    if (profile?.age_class === "child") dest = `/${lang}/kids`;
+    if (profile?.age_class === "child") dest = `/kids`;
   }
   redirect(dest);
 }
@@ -119,7 +119,7 @@ export async function signupAction(formData: FormData): Promise<ActionResult> {
     password,
     options: {
       data: { username, preferred_language },
-      ...(base ? { emailRedirectTo: `${base}/${lang}/auth/callback` } : {}),
+      ...(base ? { emailRedirectTo: `${base}/auth/callback` } : {}),
     },
   });
   if (error) return { error: error.message };
@@ -144,7 +144,7 @@ export async function signupAction(formData: FormData): Promise<ActionResult> {
     return { error: dict.validation.genericError };
   }
 
-  redirect(`/${lang}/auth/verify`);
+  redirect(`/auth/verify`);
 }
 
 /** Re-send the signup verification email. Never reveals if the email exists. */
@@ -165,7 +165,7 @@ export async function resendVerificationAction(formData: FormData): Promise<Acti
   await supabase.auth.resend({
     type: "signup",
     email: email.trim(),
-    options: base ? { emailRedirectTo: `${base}/${lang}/auth/callback` } : undefined,
+    options: base ? { emailRedirectTo: `${base}/auth/callback` } : undefined,
   });
   return {};
 }
@@ -202,7 +202,7 @@ async function requestPasswordResetInner(formData: FormData): Promise<ActionResu
   const { error: resetError } = await supabase.auth.resetPasswordForEmail(email.trim(), {
     ...(base
       ? {
-          redirectTo: `${base}/${lang}/auth/callback?next=/${lang}/reset-password`,
+          redirectTo: `${base}/auth/callback?next=/reset-password`,
         }
       : {}),
   });
