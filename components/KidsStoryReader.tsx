@@ -5,6 +5,7 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { FontSizeToggle, type KidsFontSize } from "./FontSizeToggle";
 import { KidsReportButton } from "./KidsReportButton";
+import { parseDialogueContent } from "@/lib/kids-dialogue";
 
 const FONT_KEY = "qissa-kids-font";
 
@@ -82,7 +83,7 @@ export function KidsStoryReader({
 
       const record = async (): Promise<boolean> => {
         try {
-          const res = await fetch(`/${lang}/api/kids/history`, {
+          const res = await fetch(`/api/kids/history`, {
             method: "POST",
             headers: { "content-type": "application/json" },
             body: JSON.stringify({ post_id: story.id }),
@@ -119,11 +120,14 @@ export function KidsStoryReader({
     l: "text-2xl leading-[2.75rem]",
   }[fontSize];
 
+  // Picture-dialogue stories: every dialogue turn starts with its illustration.
+  const dialogue = parseDialogueContent(story.content);
+
   return (
     <div className="mx-auto max-w-3xl px-4 py-8">
       <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
         <Link
-          href={`/${lang}/kids`}
+          href={`/kids`}
           className="inline-flex items-center gap-1 rounded-full bg-white px-4 py-2 text-sm font-bold text-violet-700 shadow-sm hover:bg-violet-50 dark:bg-neutral-900 dark:text-violet-300 dark:hover:bg-neutral-800"
         >
           ← {labels.backToStories}
@@ -158,9 +162,36 @@ export function KidsStoryReader({
           <p className="mb-8 text-base text-neutral-500 dark:text-neutral-400">{story.authorName}</p>
         )}
 
-        <div className={`${bodySize} whitespace-pre-wrap text-neutral-800 dark:text-neutral-100`}>
-          {story.content}
-        </div>
+        {dialogue ? (
+          <div className="flex flex-col gap-8">
+            {dialogue.turns.map((turn, i) => (
+              <figure
+                key={i}
+                className="overflow-hidden rounded-3xl border-2 border-violet-100 bg-violet-50/50 dark:border-violet-800/40 dark:bg-neutral-800/40"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={turn.img}
+                  alt={`${turn.speaker}`}
+                  className="aspect-[4/3] w-full object-cover"
+                  loading={i === 0 ? "eager" : "lazy"}
+                />
+                <figcaption className="p-5 sm:p-6">
+                  <p className="mb-2 inline-block rounded-full bg-violet-600 px-4 py-1 text-base font-extrabold text-white">
+                    {turn.speaker}
+                  </p>
+                  <p className={`${bodySize} text-neutral-800 dark:text-neutral-100`}>
+                    {turn.line}
+                  </p>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        ) : (
+          <div className={`${bodySize} whitespace-pre-wrap text-neutral-800 dark:text-neutral-100`}>
+            {story.content}
+          </div>
+        )}
       </article>
 
       <div className="mt-6">
