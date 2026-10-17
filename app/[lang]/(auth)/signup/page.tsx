@@ -22,7 +22,7 @@ export default function SignupPage() {
     try {
       const formData = new FormData(e.currentTarget);
       // Sign up via Route Handler (JSON) — see login page for why.
-      const res = await fetch(`/${locale}/api/auth/signup`, {
+      const res = await fetch(`/api/auth/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -130,7 +130,7 @@ export default function SignupPage() {
       <p className="mt-6 text-sm text-neutral-500">
         {dict.auth.haveAccount}{" "}
         <Link
-          href={`/${locale}/login`}
+          href={`/login`}
           className="text-emerald-700 hover:underline dark:text-emerald-400"
         >
           {dict.auth.loginButton}
