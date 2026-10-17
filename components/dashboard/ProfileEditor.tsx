@@ -49,7 +49,7 @@ export function ProfileEditor({
     setSaving(true);
     setMessage(null);
     try {
-      const res = await fetch(`/${lang}/api/profile`, {
+      const res = await fetch(`/api/profile`, {
         method: "PATCH",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
@@ -81,7 +81,7 @@ export function ProfileEditor({
     try {
       const form = new FormData();
       form.append("file", file);
-      const res = await fetch(`/${lang}/api/profile/avatar`, { method: "POST", body: form });
+      const res = await fetch(`/api/profile/avatar`, { method: "POST", body: form });
       if (!res.ok) throw new Error(`avatar failed: ${res.status}`);
       const data = await res.json();
       setAvatarUrl(data.avatar_url as string);
