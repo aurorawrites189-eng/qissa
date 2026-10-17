@@ -22,7 +22,7 @@ export function SaveButton({ postId, lang, dict, initialSaved, signedIn }: SaveB
     const next = !saved;
     setSaved(next); // optimistic
     try {
-      const res = await fetch(`/${lang}/api/posts/${postId}/save`, {
+      const res = await fetch(`/api/posts/${postId}/save`, {
         method: next ? "POST" : "DELETE",
       });
       if (!res.ok) throw new Error("failed");
@@ -38,7 +38,7 @@ export function SaveButton({ postId, lang, dict, initialSaved, signedIn }: SaveB
   if (!signedIn) {
     return (
       <a
-        href={`/${lang}/login`}
+        href={`/login`}
         className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm text-neutral-600 hover:bg-neutral-100 dark:text-neutral-300 dark:hover:bg-neutral-800"
         aria-label={dict.social.save}
       >
