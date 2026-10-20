@@ -162,7 +162,7 @@
     "signout": "Sign out",
     "signup": "Sign up",
     "write": "Write",
-    "series": "Serials"
+    "series": "Cliffhangers"
   },
   "pagination": {
     "next": "Next",
@@ -301,7 +301,7 @@
     "note": "We read everything, but we're a small team — please allow a few days for a reply."
   },
   "series": {
-    "title": "Serials",
+    "title": "Cliffhangers",
     "subtitle": "Episode-wise novels with cliffhangers — a new twist in every episode.",
     "newSeries": "Start Your Own Series",
     "newSeriesTitle": "Start a New Series",
@@ -324,7 +324,7 @@
     "prevEpisode": "Previous episode",
     "nextEpisode": "Next episode",
     "backToSeries": "All episodes",
-    "emptyTitle": "No serials yet",
+    "emptyTitle": "No Cliffhangers yet",
     "emptyBody": "Be the first to start an episode-wise novel!",
     "loginToCreate": "Log in to start your own series.",
     "pendingApproval": "Waiting for admin approval"
