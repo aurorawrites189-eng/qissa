@@ -302,6 +302,8 @@
   },
   "series": {
     "title": "Cliffhangers",
+    "urduSection": "Urdu Cliffhangers",
+    "englishSection": "English Cliffhangers",
     "subtitle": "Episode-wise novels with cliffhangers — a new twist in every episode.",
     "newSeries": "Start Your Own Series",
     "newSeriesTitle": "Start a New Series",
