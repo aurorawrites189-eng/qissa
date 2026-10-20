@@ -55,6 +55,13 @@ export default async function SeriesPage({ params: _params }: { params: Promise<
 
   const t = dict.series as Record<string, string>;
 
+  // Split the shelf into separate Urdu and English sections (aurora, Oct 20).
+  const isEnglish = (s: SeriesRow) => (s.language ?? "").toLowerCase().startsWith("en");
+  const groups: { key: string; heading: string; items: SeriesRow[] }[] = [
+    { key: "ur", heading: t.urduSection, items: seriesList.filter((s) => !isEnglish(s)) },
+    { key: "en", heading: t.englishSection, items: seriesList.filter(isEnglish) },
+  ];
+
   return (
     <div className="bg-gradient-to-b from-indigo-50 via-white to-amber-50 dark:from-neutral-950 dark:via-neutral-950 dark:to-neutral-900">
       <div className="mx-auto max-w-6xl px-4 py-10">
@@ -65,12 +72,12 @@ export default async function SeriesPage({ params: _params }: { params: Promise<
           <p className="mt-3 text-lg text-neutral-600 dark:text-neutral-300">{t.subtitle}</p>
           <div className="mt-5">
             {user ? (
-              <Link href={`/${lang}/series/new`}>
+              <Link href={`/series/new`}>
                 <Button>{t.newSeries}</Button>
               </Link>
             ) : (
               <p className="text-sm text-neutral-500">
-                <Link href={`/${lang}/login`} className="font-medium text-indigo-700 underline dark:text-indigo-400">
+                <Link href={`/login`} className="font-medium text-indigo-700 underline dark:text-indigo-400">
                   {t.loginToCreate}
                 </Link>
               </p>
@@ -87,11 +94,16 @@ export default async function SeriesPage({ params: _params }: { params: Promise<
             <p className="mt-2 text-neutral-600 dark:text-neutral-300">{t.emptyBody}</p>
           </div>
         ) : (
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {seriesList.map((s) => (
+          groups
+            .filter((g) => g.items.length > 0)
+            .map((g) => (
+              <section key={g.key} className="mb-12">
+                <h2 className="mb-5 text-2xl font-bold text-indigo-800 dark:text-indigo-300">{g.heading}</h2>
+                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                  {g.items.map((s) => (
               <Link
                 key={s.id}
-                href={`/${lang}/series/${s.id}`}
+                href={`/series/${s.id}`}
                 className="group rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm transition hover:shadow-md dark:border-neutral-800 dark:bg-neutral-900"
               >
                 <div className="flex items-start justify-between gap-2">
@@ -120,8 +132,10 @@ export default async function SeriesPage({ params: _params }: { params: Promise<
                   {counts.get(s.id) ?? 0} {t.episodes}
                 </p>
               </Link>
-            ))}
-          </div>
+                  ))}
+                </div>
+              </section>
+            ))
         )}
       </div>
     </div>
