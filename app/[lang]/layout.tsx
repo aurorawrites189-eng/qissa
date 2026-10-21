@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 import { SITE, type Locale } from "@/lib/site-config";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
@@ -21,6 +22,12 @@ export async function generateMetadata({
   const { lang } = await params;
   const locale: Locale = isLocale(lang) ? lang : "en";
   const base = SITE.url.replace(/\/$/, "");
+  // Self-referencing canonical: middleware rewrites clean URLs to the
+  // internal /{lang}/... routes and passes the original clean pathname in
+  // the "x-nazmhub-path" request header. Fall back to the homepage.
+  const hdrs = await headers();
+  const cleanPath = hdrs.get("x-nazmhub-path") || "/";
+  const pageUrl = cleanPath === "/" ? base : `${base}${cleanPath}`;
   const title = `${SITE.name} — ${SITE.tagline}`;
   const description =
     locale === "ur"
@@ -34,14 +41,14 @@ export async function generateMetadata({
     },
     description,
     alternates: {
-      canonical: base,
+      canonical: pageUrl,
     },
     openGraph: {
       type: "website",
       siteName: SITE.name,
       title,
       description,
-      url: base,
+      url: pageUrl,
       locale: locale === "ur" ? "ur_PK" : "en_US",
       alternateLocale: locale === "ur" ? ["en_US"] : ["ur_PK"],
       images: [
