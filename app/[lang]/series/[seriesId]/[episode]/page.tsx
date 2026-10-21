@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { isLocale } from "@/lib/i18n/config";
+import { publicStorageUrl } from "@/lib/storage";
 
 interface EpisodeRow {
   id: string;
@@ -38,13 +39,16 @@ export default async function EpisodePage({
 
   const { data: ep } = await supabase
     .from("posts")
-    .select("id, title, content, episode_number")
+    .select("id, title, content, episode_number, post_images(storage_path)")
     .eq("series_id", params.seriesId)
     .eq("episode_number", epNum)
     .eq("status", "published")
     .maybeSingle();
   if (!ep) notFound();
   const episode = ep as EpisodeRow;
+  const cover =
+    (ep as { post_images?: { storage_path: string }[] | null }).post_images?.[0]?.storage_path ??
+    null;
 
   // Prev / next episode numbers.
   const { data: neighbors } = await supabase
@@ -66,7 +70,7 @@ export default async function EpisodePage({
   return (
     <article className="mx-auto max-w-3xl px-4 py-8">
       <Link
-        href={`/${lang}/series/${params.seriesId}`}
+        href={`/series/${params.seriesId}`}
         className="text-sm font-medium text-indigo-700 underline dark:text-indigo-400"
       >
         ← {(s as { title: string }).title} · {t.backToSeries}
@@ -78,6 +82,16 @@ export default async function EpisodePage({
         </p>
         <h1 className="mt-1 text-3xl font-extrabold leading-tight md:text-4xl">{episode.title}</h1>
       </header>
+
+      {cover && (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={publicStorageUrl("post-images", cover)}
+          alt={episode.title}
+          className="mt-6 aspect-[16/9] w-full rounded-3xl object-cover shadow-md"
+          loading="eager"
+        />
+      )}
 
       <div className="prose prose-neutral mt-6 max-w-none dark:prose-invert">
         {paragraphs.map((para, i) => (
@@ -91,7 +105,7 @@ export default async function EpisodePage({
         <div>
           {prevNum !== null && (
             <Link
-              href={`/${lang}/series/${params.seriesId}/${prevNum}`}
+              href={`/series/${params.seriesId}/${prevNum}`}
               className="rounded-xl border border-neutral-300 px-4 py-2 text-sm font-medium hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800"
             >
               ← {t.prevEpisode} {prevNum}
@@ -101,7 +115,7 @@ export default async function EpisodePage({
         <div>
           {nextNum !== null ? (
             <Link
-              href={`/${lang}/series/${params.seriesId}/${nextNum}`}
+              href={`/series/${params.seriesId}/${nextNum}`}
               className="rounded-xl bg-indigo-600 px-5 py-2.5 text-sm font-bold text-white hover:bg-indigo-700"
             >
               {t.nextEpisode} {nextNum} →
