@@ -12,6 +12,7 @@ interface SeriesRow {
   genre: string | null;
   language: string;
   status: string;
+  cover_url: string | null;
   created_at: string;
 }
 
@@ -32,7 +33,7 @@ export default async function SeriesPage({ params: _params }: { params: Promise<
 
   const { data: series } = await supabase
     .from("series")
-    .select("id, title, description, genre, language, status, created_at")
+    .select("id, title, description, genre, language, status, cover_url, created_at")
     .order("created_at", { ascending: false })
     .limit(50);
 
@@ -104,8 +105,18 @@ export default async function SeriesPage({ params: _params }: { params: Promise<
               <Link
                 key={s.id}
                 href={`/series/${s.id}`}
-                className="group rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm transition hover:shadow-md dark:border-neutral-800 dark:bg-neutral-900"
+                className="group overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-sm transition hover:shadow-md dark:border-neutral-800 dark:bg-neutral-900"
               >
+                {s.cover_url && (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={s.cover_url}
+                    alt={s.title}
+                    className="aspect-[16/9] w-full object-cover"
+                    loading="lazy"
+                  />
+                )}
+                <div className="p-6">
                 <div className="flex items-start justify-between gap-2">
                   <span className="rounded-full bg-indigo-100 px-3 py-1 text-xs font-medium text-indigo-800 dark:bg-indigo-900/40 dark:text-indigo-300">
                     {s.genre ?? "—"}
@@ -131,6 +142,7 @@ export default async function SeriesPage({ params: _params }: { params: Promise<
                 <p className="mt-4 text-sm font-medium text-neutral-500">
                   {counts.get(s.id) ?? 0} {t.episodes}
                 </p>
+                </div>
               </Link>
                   ))}
                 </div>
