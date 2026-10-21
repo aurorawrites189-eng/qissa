@@ -18,7 +18,7 @@ export default async function KidsStoryPage({
   const supabase = await createClient();
   const { data: post } = await supabase
     .from("posts")
-    .select("id, title, content, language, category, author_id")
+    .select("id, title, content, language, category, author_id, post_images(storage_path, alt_text)")
     .eq("id", params.id)
     .eq("status", "published")
     .eq("is_kids_approved", true)
@@ -55,6 +55,10 @@ export default async function KidsStoryPage({
           authorName: author
             ? ((author.display_name as string | null) ?? (author.username as string))
             : null,
+          cover:
+            ((post as { post_images?: { storage_path: string; alt_text: string | null }[] | null })
+              .post_images?.[0] as { storage_path: string; alt_text: string | null } | undefined) ??
+            null,
         }}
         labels={{
           backToStories: dict.kids.allStories,
