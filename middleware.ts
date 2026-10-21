@@ -83,7 +83,14 @@ export default async function middleware(request: NextRequest) {
   const rewriteWithSession = () => {
     const url = request.nextUrl.clone();
     url.pathname = effectivePath;
-    const res = NextResponse.rewrite(url);
+    // Carry the ORIGINAL clean pathname into the rewritten request so the
+    // root layout can emit a self-referencing canonical URL for the page
+    // (internal /{lang}/... path must never leak into canonical/OG URLs).
+    const requestHeaders = new Headers(request.headers);
+    requestHeaders.set("x-nazmhub-path", pathname);
+    const res = NextResponse.rewrite(url, {
+      request: { headers: requestHeaders },
+    });
     for (const c of sessionResponse.cookies.getAll()) {
       res.cookies.set(c.name, c.value);
     }
