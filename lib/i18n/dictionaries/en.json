@@ -162,7 +162,17 @@
     "signout": "Sign out",
     "signup": "Sign up",
     "write": "Write",
-    "series": "Cliffhangers"
+    "series": "Cliffhangers",
+    "download": "Download"
+  },
+  "downloads": {
+    "title": "Download Books",
+    "subtitle": "Every finished serial, gathered into one complete book — read it online or download the PDF free.",
+    "readOnline": "Read Online",
+    "downloadPdf": "Download PDF",
+    "badge": "Complete Book",
+    "emptyTitle": "No completed books yet",
+    "emptyBody": "When a serial finishes all of its episodes, its complete book will appear here as a free PDF."
   },
   "pagination": {
     "next": "Next",
