@@ -6,6 +6,7 @@ import { createClient } from "@/lib/supabase/client";
 import { FontSizeToggle, type KidsFontSize } from "./FontSizeToggle";
 import { KidsReportButton } from "./KidsReportButton";
 import { parseDialogueContent } from "@/lib/kids-dialogue";
+import { publicStorageUrl } from "@/lib/storage";
 
 const FONT_KEY = "qissa-kids-font";
 
@@ -16,6 +17,7 @@ export interface ReaderStory {
   language: string;
   categoryName: string | null;
   authorName: string | null;
+  cover: { storage_path: string; alt_text: string | null } | null;
 }
 
 interface ReaderLabels {
@@ -160,6 +162,16 @@ export function KidsStoryReader({
         </h1>
         {story.authorName && (
           <p className="mb-8 text-base text-neutral-500 dark:text-neutral-400">{story.authorName}</p>
+        )}
+
+        {story.cover && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={publicStorageUrl("post-images", story.cover.storage_path)}
+            alt={story.cover.alt_text ?? story.title}
+            className="mb-8 aspect-[16/9] w-full rounded-3xl object-cover"
+            loading="eager"
+          />
         )}
 
         {dialogue ? (
