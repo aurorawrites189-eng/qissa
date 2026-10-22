@@ -38,6 +38,20 @@ function getLangFromCookie(request: NextRequest): Locale {
  * is UX only (see supabase/migrations/0001_schema.sql).
  */
 export default async function middleware(request: NextRequest) {
+  // 0. Retired domain: the same deployment also answers on the old
+  //    qissa-37g.pages.dev domain. Redirect every request there to the
+  //    canonical nazmhub.pages.dev domain (same path + query, 301) so
+  //    search engines see ONE site instead of two duplicate copies
+  //    (fixes "Duplicate without user-selected canonical" in GSC).
+  const host = request.headers.get("host");
+  if (host === "qissa-37g.pages.dev") {
+    const url = request.nextUrl.clone();
+    url.protocol = "https:";
+    url.host = "nazmhub.pages.dev";
+    url.port = "";
+    return NextResponse.redirect(url, 301);
+  }
+
   // 1. Refresh the Supabase session cookie on every request.
   const sessionResponse = await updateSession(request);
 
