@@ -28,11 +28,71 @@ export async function generateMetadata({
   const hdrs = await headers();
   const cleanPath = hdrs.get("x-nazmhub-path") || "/";
   const pageUrl = cleanPath === "/" ? base : `${base}${cleanPath}`;
-  const title = `${SITE.name} — ${SITE.tagline}`;
+  // Unique title + description per page. Every page used to share the same
+  // title ("NazmHub — Write. Read. Belong."), so Google showed the same
+  // snippet for all of them. The clean path comes from the
+  // "x-nazmhub-path" header (see canonical comment above).
+  const pageMeta: Record<string, { title: string; description: string }> = {
+    "/series": {
+      title: "Cliffhangers — Serial Stories in Urdu & English",
+      description:
+        "Read serial episode novels (Cliffhangers) in Urdu and English on NazmHub — one episode at a time, free to read.",
+    },
+    "/kids": {
+      title: "Kids Stories in Urdu & English",
+      description:
+        "Original kids' stories in Urdu and English on NazmHub — safe, reviewed stories for young readers.",
+    },
+    "/write": {
+      title: "Write a Story",
+      description:
+        "Write and publish your own stories in Urdu or English on NazmHub.",
+    },
+    "/download": {
+      title: "Free Story Books — Download",
+      description:
+        "Download free completed serial story books as PDFs from NazmHub.",
+    },
+    "/login": {
+      title: "Log In",
+      description: "Log in to your NazmHub account to write, read and save stories.",
+    },
+    "/signup": {
+      title: "Sign Up",
+      description:
+        "Create your free NazmHub account and start writing and reading stories in Urdu and English.",
+    },
+    "/feed": {
+      title: "Feed — Latest Stories",
+      description: "The latest stories and serial episodes published on NazmHub.",
+    },
+  };
+  // Dynamic pages (/series/<id>, /kids/story/<id>, /posts/<id>) get a
+  // section-level title instead of the homepage title.
+  const section = cleanPath.split("/").filter(Boolean)[0];
+  const sectionMeta: Record<string, { title: string; description: string }> = {
+    series: {
+      title: "Cliffhangers — Serial Story",
+      description: "Read this serial episode novel in Urdu or English on NazmHub.",
+    },
+    kids: {
+      title: "Kids Story",
+      description: "Read this original kids' story in Urdu or English on NazmHub.",
+    },
+    posts: {
+      title: "Story",
+      description: "Read this story on NazmHub.",
+    },
+  };
+  const meta = pageMeta[cleanPath] ?? (section ? sectionMeta[section] : undefined);
+  const title = meta
+    ? `${meta.title} · ${SITE.name}`
+    : `${SITE.name} — ${SITE.tagline}`;
   const description =
-    locale === "ur"
+    meta?.description ??
+    (locale === "ur"
       ? `${SITE.nameUrdu} — ${SITE.taglineUrdu} اردو اور انگریزی میں لکھنے اور پڑھنے کی کمیونٹی۔`
-      : `${SITE.name} — ${SITE.tagline} A multilingual (Urdu + English) community for writers and readers.`;
+      : `${SITE.name} — ${SITE.tagline} A multilingual (Urdu + English) community for writers and readers.`);
   return {
     metadataBase: new URL(base),
     title: {
